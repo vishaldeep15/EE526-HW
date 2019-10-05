@@ -114,6 +114,61 @@ Now taking second derivative of softplus function,
 
 \noindent From \cref{eqn:2ndderivative}, numerator is always positive because exponential is a positive number and any power to a positive is number is always a positive number. The denominator is always positive because is squared. Therefore we can say that second derivative of a softplus function is always positive for every value of z. This implies that a softplus function is convex in z.
 
+\section{Problem 2}
+We have a vector $ z = [z1, z2, ... , zn]^{T} $ and  $ p = [p1, p2, ... , pn]^{T} $, where p is output after z is applied to a softmax function.
+
+\begin{equation}
+	p_{i} = \frac{e^{z_{i}}}{\sum_{j=1}^{n} e^{z_{j}}}
+\end{equation}
+
+\noindent The jacobian matrix will have two types of elements diagonal and off-diagonal, we will calculate both and then generalize the result for all elements. \\
+
+\textbf{Diagonal row elements:}
+\begin{align*}
+	\frac{\partial{p_i}}{\partial{z_i}} = \frac{\sum_{j=1}^{n}e^{z_{j}}.e^{z_{i}}- e^{z_{i}}.e^{z_{i}}}{(\sum_{j=1}^{n}e^{z_{j}})^2} \\
+	\frac{\partial{p_i}}{\partial{z_i}} = \frac{e^{z_{i}}}{\sum_{j=1}^{n}e^{z_{j}}} - \left(\frac{e^{z_{i}}}{\sum_{j=1}^{n}e^{z_{j}}} \right)^2 
+\end{align*}
+	
+\begin{equation}\label{eqn:diagonal}
+	\frac{\partial{p_i}}{\partial{z_i}} = p_i - p_{i}^{2}
+\end{equation}
+
+\textbf{off-diagonal row elements:}
+\begin{align*}
+	\frac{\partial{p_i}}{\partial{z_j}} = \frac{\sum_{j=1}^{n}e^{z_{j}}.0 - e^{z_{i}}.e^{z_{j}}}{(\sum_{j=1}^{n}e^{z_{j}})^2} \\
+	\frac{\partial{p_i}}{\partial{z_j}} = - \frac{e^{z_{i}}}{\sum_{j=1}^{n}e^{z_{j}}} \times \frac{e^{z_{i}}}{\sum_{j=1}^{n}e^{z_{j}}} 
+\end{align*}
+
+\begin{equation}\label{eqn:offdiagonal}
+	\frac{\partial{p_i}}{\partial{z_j}} = - p_{i} p_{j}
+\end{equation}
+
+The Jacobian matrix is given by
+\begin{equation}
+\frac{\partial{p}}{\partial{z}} = 
+\begin{bmatrix}
+\frac{\partial{p_{0}}}{\partial{z_{0}}} & \frac{\partial{p_{0}}}{\partial{z_{1}}} & \cdots & \frac{\partial{p_{0}}}{\partial{z_{n}}} \\
+\frac{\partial{p_{1}}}{\partial{z_{0}}} & \frac{\partial{p_{1}}}{\partial{z_{1}}} &\cdots & \frac{\partial{p_{1}}}{\partial{z_{n}}} \\
+\vdots & \vdots & \ddots & \vdots\\
+\frac{\partial{p_{n}}}{\partial{z_{0}}} & \frac{\partial{p_{n}}}{\partial{z_{1}}} &\cdots & \frac{\partial{p_{n}}}{\partial{z_{n}}} \\
+\end{bmatrix}
+\end{equation}
+
+using \cref{eqn:diagonal} and \cref{eqn:offdiagonal}, we get
+
+\begin{equation}
+\frac{\partial{p}}{\partial{z}} = 
+\begin{bmatrix}
+p_{0} - p_{0}^2 & -p_{0}p_{1} & \cdots & -p_{0}p_{n} \\
+-p_{1}p_{0} & p_{1}-p_{1}^2 &\cdots & -p_{1}p_{n} \\
+\vdots & \vdots & \ddots & \vdots\\
+-p_{n}p_{0} & -p_{n}p_{1} &\cdots &  p_{n}-p_{n}^2\\
+\end{bmatrix}
+\end{equation}
+
+
+
+
 
 
 
