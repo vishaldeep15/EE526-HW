@@ -1,0 +1,120 @@
+\documentclass[letter, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{lipsum} %This package just generates Lorem Ipsum filler text. 
+\usepackage{fullpage} % changes the margin
+\usepackage{listings} % code formatting
+\usepackage{enumitem} % change enumeration counter
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{cleveref}
+
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+}
+
+\begin{document}
+	
+\begin{titlepage}
+	
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+	
+	\center % Center everything on the page
+	
+	%----------------------------------------------------------------------------------------
+	%	HEADING SECTIONS
+	%----------------------------------------------------------------------------------------
+	
+	\textsc{\LARGE Iowa State University}\\[1.5cm] % Name of your university/college
+	\textsc{\LARGE Department of Electrical and Computer Engineering}\\[1.0cm]
+	\textsc{\Large Deep Machine Learning: Theory and Practice}\\[0.5cm] % Major heading such as course name
+	\textsc{\large EE 526X}\\[0.5cm] % Minor heading such as course title
+	
+	%----------------------------------------------------------------------------------------
+	%	TITLE SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\HRule \\[0.4cm]
+	{ \huge \bfseries Homework 2}\\[0.4cm] % Title of your document
+	\HRule \\[1.5cm]
+	
+	%----------------------------------------------------------------------------------------
+	%	AUTHOR SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushleft} \large
+			\emph{Author:}\\
+			Vishal \textsc{Deep} % Your name
+		\end{flushleft}
+	\end{minipage}
+	~
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushright} \large
+			\emph{Instructor:} \\
+			Dr. Zhengdao \textsc{Wang} % Supervisor's Name
+		\end{flushright}
+	\end{minipage}\\[2cm]
+	
+	% If you don't want a supervisor, uncomment the two lines below and remove the section above
+	%\Large \emph{Author:}\\
+	%John \textsc{Smith}\\[3cm] % Your name
+	
+	%----------------------------------------------------------------------------------------
+	%	DATE SECTION
+	%----------------------------------------------------------------------------------------
+	
+	{\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
+	
+	%----------------------------------------------------------------------------------------
+	%	LOGO SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\includegraphics[width=0.5\columnwidth]{Iowa_State_Cyclones_logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+	
+	%----------------------------------------------------------------------------------------
+	
+	\vfill % Fill the rest of the page with whitespace
+	
+\end{titlepage}
+%Header-Make sure you update this information!!!!
+%\noindent
+%\large\textbf{Homework21} \hfill \textbf{Vishal Deep} \\
+%\normalsize CPRE 581  \hfill ID: 010639648 \\
+%Dr. Zhengdao Duwe \hfill Due Date: 09/05/18 \\
+
+\section{Problem 1}
+We have a softplus function,
+\begin{equation}
+	f(z) = \log(1 + e^{z}) 
+\end{equation} 
+
+Taking first derivative of the function:
+\begin{equation}
+	f'(z) = \frac{1}{(1 + e^{z})}e^{z}	
+\end{equation}
+
+multiplying and dividing by $e^{-z}$,
+\begin{equation}
+	f'(z) = \frac{e^{z}.e^{-z}}{(1.e^{-z} + e^{z}.e^{-z})}
+	 	  = \frac{1}{(1 + e^{-z})}
+\end{equation}
+
+Now taking second derivative of softplus function,
+
+\begin{equation}
+	f''(z) = \frac{(1+e^{-z}).0+e^{-z}}{(1+e^{-z})^{2}}
+\end{equation}
+
+\begin{equation}\label{eqn:2ndderivative}
+	f''(z) = \frac{e^{-z}}{(1+e^{-z})^{2}}
+\end{equation}
+
+\noindent From \cref{eqn:2ndderivative}, numerator is always positive because exponential is a positive number and any power to a positive is number is always a positive number. The denominator is always positive because is squared. Therefore we can say that second derivative of a softplus function is always positive for every value of z. This implies that a softplus function is convex in z.
+
+
+
+
+\end{document}
