@@ -123,7 +123,7 @@ We have a vector $ z = [z1, z2, ... , zn]^{T} $ and  $ p = [p1, p2, ... , pn]^{T
 
 \noindent The jacobian matrix will have two types of elements diagonal and off-diagonal, we will calculate both and then generalize the result for all elements. \\
 
-\textbf{Diagonal row elements:}
+\textbf{Diagonal row elements (i=j):}
 \begin{align*}
 	\frac{\partial{p_i}}{\partial{z_i}} = \frac{\sum_{j=1}^{n}e^{z_{j}}.e^{z_{i}}- e^{z_{i}}.e^{z_{i}}}{(\sum_{j=1}^{n}e^{z_{j}})^2} \\
 	\frac{\partial{p_i}}{\partial{z_i}} = \frac{e^{z_{i}}}{\sum_{j=1}^{n}e^{z_{j}}} - \left(\frac{e^{z_{i}}}{\sum_{j=1}^{n}e^{z_{j}}} \right)^2 
@@ -133,7 +133,7 @@ We have a vector $ z = [z1, z2, ... , zn]^{T} $ and  $ p = [p1, p2, ... , pn]^{T
 	\frac{\partial{p_i}}{\partial{z_i}} = p_i - p_{i}^{2}
 \end{equation}
 
-\textbf{off-diagonal row elements:}
+\textbf{off-diagonal row elements (i$\neq$j):}
 \begin{align*}
 	\frac{\partial{p_i}}{\partial{z_j}} = \frac{\sum_{j=1}^{n}e^{z_{j}}.0 - e^{z_{i}}.e^{z_{j}}}{(\sum_{j=1}^{n}e^{z_{j}})^2} \\
 	\frac{\partial{p_i}}{\partial{z_j}} = - \frac{e^{z_{i}}}{\sum_{j=1}^{n}e^{z_{j}}} \times \frac{e^{z_{i}}}{\sum_{j=1}^{n}e^{z_{j}}} 
@@ -166,6 +166,45 @@ p_{0} - p_{0}^2 & -p_{0}p_{1} & \cdots & -p_{0}p_{n} \\
 \end{bmatrix}
 \end{equation}
 
+
+\section{Problem 3}
+We have $ y = [y1, y2, ... , yn]^{T} $, a correct probability vector. And the cross entropy is given by 
+
+\begin{equation}\label{eqn:crossentropy}
+	J(z) = - \sum_{i=1}^{n} y_{i}\log{p_i}
+\end{equation}
+
+\cref{eqn:crossentropy} is a dot product or element-wise product of $y_i$ and $\log{p_i}$. Taking derivative of \cref{eqn:crossentropy} w.r.t. $p_i$,
+
+\begin{align*}
+	\frac{\partial{J}}{\partial{p_i}} = - \frac{\partial{}}{\partial{p_i}}  y_{i} \log{p_i} 
+	= - y_{i} \frac{\partial{\log{p_i}}}{\partial{p_i}}    
+\end{align*}
+
+\begin{equation}\label{eqn:Jp}
+	\frac{\partial{J}}{\partial{p_i}} = - \frac{y_i}{p_i}
+\end{equation}
+
+Also from \cref{eqn:diagonal,eqn:offdiagonal} we know $\frac{\partial{p_i}}{\partial{z_j}}$,
+
+\begin{equation}\label{eqn:pz}
+	\frac{\partial{p_i}}{\partial{z_j}} =
+	\begin{cases} 
+      p_i - p_{i}^{2} & i = j\\
+     - p_{i} p_{j} & i \neq j
+   \end{cases}
+\end{equation}
+
+from \cref{eqn:Jp,eqn:pz}, we can find $\frac{\partial{J}}{\partial{z_i}}$
+\[
+\begin{aligned}
+	\frac{\partial{J}}{\partial{z_i}} & = \sum_{j=1}^{n} \frac{\partial{J}}{\partial{p_j}} \frac{\partial{p_j}}{\partial{z_i}} \\
+	& = \frac{\partial{J}}{\partial{p_i}} \frac{\partial{p_i}}{\partial{z_i}} + \sum_{i \neq j} \frac{\partial{J}}{\partial{p_j}} \frac{\partial{p_j}}{\partial{z_i}} \\
+	& = - \frac{y_i}{p_i} (p_i - p_{i}^{2}) + \sum_{i \neq j} (- \frac{y_j}{p_j}) (- p_{i} p_{j}) \\
+	& = - y_{i}(1 - p_{i}) + \sum_{i \neq j} y_{j} p_{i} \\
+	& = - y_{i} + y_{i}p_{i} + p_{i}  \sum_{j} y_{j}
+\end{aligned}
+\]
 
 
 
