@@ -42,27 +42,30 @@ def main():
   D=2 # Input dimension
   Odim=3 # number of outputs
   layers=[ (100, ReLU), (40, ReLU), (Odim, Linear) ]
-  nn=NeuralNetwork(D, layers)
+  nn=NeuralNetwork(D, layers) 
   nn.setRandomWeights(0.1)
   CE=ObjectiveFunction('crossEntropyLogit')
 
   N=200 # points per cluster
   K=3 # number of clusters
   X,Y=generateData(N,K,D)
-
+  
   eta=1e-1
-
-  for i in range(10000):
-    logp=nn.doForward(X)
-    J=CE.doForward(logp, Y)
-    dz=CE.doBackward(Y)
-    dx=nn.doBackward(dz)
-    nn.updateWeights(eta)
-    if (i%100==0):
-      print( '\riter %d, J=%f' % (i, J), end='')
-      plot(X,Y,nn)
-    # nn.print(['W', 'b'])
-  input('Press Enter to Finish')
+  
+  print(X.shape)
+  print(Y.shape)
+  print(Y)
+#  for i in range(10000):
+#    logp=nn.doForward(X)
+#    J=CE.doForward(logp, Y)
+#    dz=CE.doBackward(Y)
+#    dx=nn.doBackward(dz)
+#    nn.updateWeights(eta)
+#    if (i%100==0):
+#      print( '\riter %d, J=%f' % (i, J), end='')
+#      plot(X,Y,nn)
+#    # nn.print(['W', 'b'])
+#  input('Press Enter to Finish')
 
 main()
 

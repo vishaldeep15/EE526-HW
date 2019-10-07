@@ -202,9 +202,17 @@ from \cref{eqn:Jp,eqn:pz}, we can find $\frac{\partial{J}}{\partial{z_i}}$
 	& = \frac{\partial{J}}{\partial{p_i}} \frac{\partial{p_i}}{\partial{z_i}} + \sum_{i \neq j} \frac{\partial{J}}{\partial{p_j}} \frac{\partial{p_j}}{\partial{z_i}} \\
 	& = - \frac{y_i}{p_i} (p_i - p_{i}^{2}) + \sum_{i \neq j} (- \frac{y_j}{p_j}) (- p_{i} p_{j}) \\
 	& = - y_{i}(1 - p_{i}) + \sum_{i \neq j} y_{j} p_{i} \\
-	& = - y_{i} + y_{i}p_{i} + p_{i}  \sum_{j} y_{j}
+	& = - y_{i} + y_{i}p_{i} + p_{i}  \sum_{j} y_{j} \\
+	& = p_{i} \left(y_{i} + \sum_{j} y_{j} \right) - y_{i} \\
 \end{aligned}
 \]
+
+Because y is one hot encoded and $\sum_{j}y_{j} = 1$
+\begin{equation}
+	\frac{\partial{J}}{\partial{z_i}} = p_{i} - y_{i}
+\end{equation}
+
+
 
 
 
