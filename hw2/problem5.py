@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Oct  6 11:03:55 2019
-
-@author: vishal
+Problem: 5, Homework 2
+@author: vishal Deep
 """
 
 from DNN import *
@@ -33,6 +33,11 @@ def trainAndTestSplit(spamEmails, notSpamEmails):
     testData = np.vstack((testSpam, testNotSpam))
     return trainData, testData
 
+def generateLabel(y_pred):
+    y_pred[y_pred < 0] = 0
+    y_pred[y_pred > 0] = 1
+    return np.transpose(y_pred)
+
 # read data from the file
 spamBaseData = pd.read_csv("spambase/spambase.data", header=None)
 # Extract label y 
@@ -52,33 +57,44 @@ Xtest = testData[:, 0:-1]
 ytest = testData[:, -1]
 
 X = np.transpose(Xtrain)
-# one hot encode
-y = np.transpose(to_categorical(ytrain))
-
-print(X.shape)
+y = np.transpose(ytrain)
+y = y.reshape(1,3066)
 print(y.shape)
-print(y)
 
 D = 57 # Input dimension
-Odim = 2 # number of outputs
-layers=[ (100, ReLU), (40, ReLU), (Odim, Linear) ]
-    
+Odim = 1 # number of outputs
+layers=[ (100, ReLU), (40, ReLU), (Odim, Linear) ]    
 # initialize Neural Network with D inputs and layers
 nn = NeuralNetwork(D, layers)
 # set random weights with maximum size of 0.1
 nn.setRandomWeights(0.1)
-
 # select crossentropy as objective function
 CE = ObjectiveFunction('logistic')
-
-eta = 1e-1
+eta = 1e-4
 
 for i in range(10000):
-    logp = nn.doForward(X)
-    J    = CE.doForward(logp, y)
+    p = nn.doForward(X)
+#    print(logp.shape)
+    J    = CE.doForward(p, y)
     dz   = CE.doBackward(y)
     dx   = nn.doBackward(dz)
     nn.updateWeights(eta)
+    if (i%100==0):
+      print( '\riter %d, J=%f' % (i, J), end='')
 
+# Prediction accuracy
+X_test = np.transpose(Xtest)
+print(X_test.shape)
+p = nn.doForward(X_test)
+print(p.shape)
 
+y_pred = generateLabel(p)
+print(y_pred.shape)
 
+print(ytest)
+
+# Performance calculations
+perfArr = np.equal(y_pred, ytest)
+print(perfArr)
+accuracy = (np.sum(perfArr)/np.size(perfArr)) * 100
+print(f'Accuracy: {accuracy}')
