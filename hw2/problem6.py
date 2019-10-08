@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from DNN import *
+from keras.utils import to_categorical
 
 # Get data from tensor flow
 mnist = tf.keras.datasets.mnist
@@ -9,6 +10,7 @@ mnist = tf.keras.datasets.mnist
 (x, y),(x_text, y_test) = mnist.load_data()
 # flatten the image data for all 60000 images
 X = x.transpose((1, 2, 0)).reshape(784, -1)
+y = np.transpose(to_categorical(y))
 
 # print(X.shape[1])
 #print(y.shape)
@@ -39,10 +41,10 @@ print(y.shape)
 
 
 
-#for i in range(10000):
-#    logp = nn.doForward(X)
-#    J    = CE.doForward(logp, y)
-#    dz   = CE.doBackward(y)
-#    dx   = nn.doBackward(dz)
-#    nn.updateWeights(eta)
+for i in range(10000):
+    logp = nn.doForward(X)
+    J    = CE.doForward(logp, y)
+    dz   = CE.doBackward(y)
+    dx   = nn.doBackward(dz)
+    nn.updateWeights(eta)
 
