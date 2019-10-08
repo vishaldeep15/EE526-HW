@@ -209,7 +209,7 @@ from \cref{eqn:Jp,eqn:pz}, we can find $\frac{\partial{J}}{\partial{z_i}}$
 \]
 
 Because y is one hot encoded and $\sum_{j}y_{j} = 1$
-\begin{equation}
+\begin{equation}\label{eqn:dz}
 	\frac{\partial{J}}{\partial{z}} = 
 	\begin{bmatrix}
 		p_{0} - y_{0} \\
@@ -243,14 +243,14 @@ We have
 	\boldsymbol{z = Wx + b}
 \end{equation}
 
-\subsection{1st Iteration:}
-	
+\textbf{1st Iteration:}
+
 \begin{align*}
-	\boldsymbol{z = Wx + b} \\
-	= \begin{bmatrix}
+	z^{[0]} &= W^{[0]}x + b^{[0]}.1 \\
+	&= \begin{bmatrix}
 		0 & 0 \\
 		0 & 0 
-		\end{bmatrix}
+	    \end{bmatrix}
 		\begin{bmatrix}
 		1 & 0 \\
 		0 & 1 
@@ -261,16 +261,283 @@ We have
 		\end{bmatrix}
 		\begin{bmatrix}
 		1 & 1
-		\end{bmatrix}		
+		\end{bmatrix}
 \end{align*}
 
+\begin{equation}
+	z^{[0]} = \begin{bmatrix}
+				0 & 0 \\
+				0 & 0 
+	    	  \end{bmatrix}
+\end{equation}
+
+We are using a softmax function, therefore p matrix is given by
+
+\begin{align*}
+	p^{[0]} = \frac{e^{z_i}}{\sum_{i=1}^{4}e^{z_i}}
+\end{align*}
+
+\begin{equation}
+	p^{[0]} = \begin{bmatrix}
+				\frac{e^{0}}{e^{0}+e^{0}+e^{0}+e^{0}} & \frac{e^{0}}{e^{0}+e^{0}+e^{0}+e^{0}} \\
+				\frac{e^{0}}{e^{0}+e^{0}+e^{0}+e^{0}} & \frac{e^{0}}{e^{0}+e^{0}+e^{0}+e^{0}} 
+	    	  \end{bmatrix} = 
+	    	  \begin{bmatrix}
+				0.25 & 0.25 \\
+				0.25 & 0.25 
+	    	  \end{bmatrix}	
+\end{equation}
+
+and cost J is given by cross entropy function,
+
+\begin{align*}
+	J^{[0]} = - \sum_{i=1}^{4}y_{i}\log{p_{i}} = - \boldsymbol{y}(\boldsymbol{\log{p}})^{T}
+\end{align*}
+
+\begin{equation}
+	J^{[0]} = - 
+			\begin{bmatrix}
+				1 & 0 \\
+				0 & 1 
+	    	  \end{bmatrix}
+	    	  \begin{bmatrix}
+				\log{0.25} & \log{0.25} \\
+				\log{0.25} & \log{0.25} 
+	    	  \end{bmatrix}	    = -
+	    	  	\begin{bmatrix}
+				\log{0.25} & \log{0.25} \\
+				\log{0.25} & \log{0.25} 
+	    	  \end{bmatrix}	 
+\end{equation}
+
+Now doing back propagation, from \cref{eqn:dz}
+\begin{equation}
+	\boldsymbol{dz}^{[0]} = \boldsymbol{p} - \boldsymbol{y}	= 
+				\begin{bmatrix}
+				0.25 & 0.25 \\
+				0.25 & 0.25 
+	    	  \end{bmatrix}	- 
+	    	  \begin{bmatrix}
+				1 & 0 \\
+				0 & 1 
+	    	  \end{bmatrix}	=
+	    	   \begin{bmatrix}
+				-0.75 & 0.25 \\
+				0.25 & -0.75 
+	    	  \end{bmatrix}	
+\end{equation}
+
+\begin{equation}
+	\boldsymbol{dW}^{[0]} = \boldsymbol{dz^{[0]}} \boldsymbol{X^{T}}	= 
+			\begin{bmatrix}
+				-0.75 & 0.25 \\
+				0.25 & -0.75 
+	    	  \end{bmatrix}	
+	    	  \begin{bmatrix}
+				1 & 0 \\
+				0 & 1 
+	    	  \end{bmatrix} =
+	    	    \begin{bmatrix}
+				-0.75 & 0.25 \\
+				0.25 & -0.75 
+	    	  \end{bmatrix}	  
+\end{equation}
+
+\begin{equation}
+	\boldsymbol{db}^{[0]} = \boldsymbol{dz^{[0]}} \begin{bmatrix}
+				1 \\
+				1 
+	    	  \end{bmatrix}	= 	    	  
+	    	  \begin{bmatrix}
+				-0.75 & 0.25 \\
+				0.25 & -0.75 
+	    	  \end{bmatrix}	
+	    	   \begin{bmatrix}
+				1 \\
+				1 
+	    	  \end{bmatrix} = 
+	    	  \begin{bmatrix}
+				-0.5 \\
+				-0.5 
+	    	  \end{bmatrix}
+\end{equation}
+
+Now update weights and bias matrices with learning rate = 1,
+\begin{equation}
+	\boldsymbol{W}^{[1]} = \boldsymbol{W^{[0]}} - 1. \boldsymbol{dW^{[0]}} =
+		\begin{bmatrix}
+		0 & 0 \\
+		0 & 0 
+	    \end{bmatrix} - 
+	     \begin{bmatrix}
+			-0.75 & 0.25 \\
+			0.25 & -0.75 
+	   	\end{bmatrix}	  =	   	
+	   	\begin{bmatrix}
+		0.75 & -0.25 \\
+		-0.25 & 0.75
+	   	\end{bmatrix}	    
+\end{equation}
+
+\begin{equation}
+	\boldsymbol{b}^{[1]} = \boldsymbol{b^{[0]}} - 1. \boldsymbol{db^{[0]}} =
+	 \begin{bmatrix}
+		0 \\
+		0 
+	 \end{bmatrix} - 
+	  \begin{bmatrix}
+		-0.5 \\
+		-0.5 
+	  \end{bmatrix} = 
+	 \begin{bmatrix}
+		0.5 \\
+		0.5 
+	  \end{bmatrix} 	 
+\end{equation}
+
+\textbf{2nd Iteration:}
+
+\begin{align*}
+	z^{[1]} &= W^{[1]}x + b^{[1]}.1 \\
+	&= 	\begin{bmatrix}
+			0.75 & -0.25 \\
+			-0.25 & 0.75
+	   	\end{bmatrix}
+		\begin{bmatrix}
+		1 & 0 \\
+		0 & 1 
+		\end{bmatrix} +
+		\begin{bmatrix}
+		0.5 \\
+		0.5 
+		\end{bmatrix}
+		\begin{bmatrix}
+		1 & 1
+		\end{bmatrix}
+\end{align*}
+
+\begin{equation}
+	z^{[1]} = \begin{bmatrix}
+				0.25 & -0.75 \\
+				-0.75 & 0.25 
+	    	  \end{bmatrix}
+\end{equation}
+
+Softmax function with $z^{[1]}$,
 
 
+\begin{equation}
+	p^{[1]} = \frac{e^{z_i}}{\sum_{i=1}^{4}e^{z_i}} = 
+	    	  \begin{bmatrix}
+				0.365 & 0.134 \\
+				0.134 & 0.365
+	    	  \end{bmatrix}	
+\end{equation}
 
+\begin{align*}
+	J^{[1]} = - \sum_{i=1}^{4}y_{i}\log{p_{i}} = - \boldsymbol{y}(\boldsymbol{\log{p}})^{T}
+\end{align*}
 
+\begin{equation}
+	J^{[1]} = - 
+			\begin{bmatrix}
+				1 & 0 \\
+				0 & 1 
+	    	  \end{bmatrix}
+	    	  \begin{bmatrix}
+				\log{0.365} & \log{0.134} \\
+				\log{0.134} & \log{0.365} 
+	    	  \end{bmatrix}	    = -
+	    	  	\begin{bmatrix}
+				\log{0.365} & \log{0.134} \\
+				\log{0.134} & \log{0.365} 
+	    	  \end{bmatrix}
+\end{equation}
 
+Now doing back propagation, from \cref{eqn:dz}
+\begin{equation}
+	\boldsymbol{dz}^{[1]} = \boldsymbol{p} - \boldsymbol{y}	= 
+				\begin{bmatrix}
+				0.365 & 0.134 \\
+				0.134 & 0.365
+	    	  \end{bmatrix}		- 
+	    	  \begin{bmatrix}
+				1 & 0 \\
+				0 & 1 
+	    	  \end{bmatrix}	=
+	    	   \begin{bmatrix}
+				-0.634 & 0.134 \\
+				0.134 & -0.634 
+	    	  \end{bmatrix}	
+\end{equation}
 
+\begin{equation}
+	\boldsymbol{dW}^{[1]} = \boldsymbol{dz^{[1]}} \boldsymbol{X^{T}}	= 
+			\begin{bmatrix}
+				-0.634 & 0.134 \\
+				0.134 & -0.634 
+	    	  \end{bmatrix}	
+	    	  \begin{bmatrix}
+				1 & 0 \\
+				0 & 1 
+	    	  \end{bmatrix} =
+	    	   \begin{bmatrix}
+				-0.634 & 0.134 \\
+				0.134 & -0.634 
+	    	  \end{bmatrix}	  
+\end{equation}
 
+\begin{equation}
+	\boldsymbol{db}^{[1]} = \boldsymbol{dz^{[1]}} \begin{bmatrix}
+				1 \\
+				1 
+	    	  \end{bmatrix}	= 	    	  
+	    	  \begin{bmatrix}
+				-0.634 & 0.134 \\
+				0.134 & -0.634 
+	    	  \end{bmatrix}
+	    	   \begin{bmatrix}
+				1 \\
+				1 
+	    	  \end{bmatrix} = 
+	    	  \begin{bmatrix}
+				-0.5 \\
+				-0.5 
+	    	  \end{bmatrix}
+\end{equation}
+
+Now update weights and bias matrices with learning rate = 1,
+\begin{equation}
+	\boldsymbol{W}^{[2]} = \boldsymbol{W^{[1]}} - 1. \boldsymbol{dW^{[1]}} =
+		\begin{bmatrix}
+			0.75 & -0.25 \\
+			-0.25 & 0.75
+	   	\end{bmatrix} - 
+	     \begin{bmatrix}
+			-0.634 & 0.134 \\
+			0.134 & -0.634 
+	    \end{bmatrix}	  =	   	
+	   	\begin{bmatrix}
+		1.384 & -0.384 \\
+		-0.384 & 1.384
+	   	\end{bmatrix}	    
+\end{equation}
+
+\begin{equation}
+	\boldsymbol{b}^{[2]} = \boldsymbol{b^{[1]}} - 1. \boldsymbol{db^{[1]}} =
+	 \begin{bmatrix}
+		0.5 \\
+		0.5 
+	  \end{bmatrix}  - 
+	  \begin{bmatrix}
+		-0.5 \\
+		-0.5 
+	  \end{bmatrix} = 
+	 \begin{bmatrix}
+		1 \\
+		1 
+	  \end{bmatrix} 	 
+\end{equation}
 
 
 
