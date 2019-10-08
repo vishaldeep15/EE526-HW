@@ -55,17 +55,17 @@ def main():
   print(X.shape)
   print(Y.shape)
   print(Y)
-#  for i in range(10000):
-#    logp=nn.doForward(X)
-#    J=CE.doForward(logp, Y)
-#    dz=CE.doBackward(Y)
-#    dx=nn.doBackward(dz)
-#    nn.updateWeights(eta)
-#    if (i%100==0):
-#      print( '\riter %d, J=%f' % (i, J), end='')
-#      plot(X,Y,nn)
-#    # nn.print(['W', 'b'])
-#  input('Press Enter to Finish')
+  for i in range(10000):
+    logp=nn.doForward(X)
+    J=CE.doForward(logp, Y)
+    dz=CE.doBackward(Y)
+    dx=nn.doBackward(dz)
+    nn.updateWeights(eta)
+    if (i%100==0):
+      print( '\riter %d, J=%f' % (i, J), end='')
+      plot(X,Y,nn)
+    # nn.print(['W', 'b'])
+  input('Press Enter to Finish')
 
 main()
 

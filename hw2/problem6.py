@@ -12,10 +12,14 @@ X = x.transpose((1, 2, 0)).reshape(784, -1)
 
 # print(X.shape[1])
 #print(y.shape)
+#import matplotlib.pyplot as plt
+#image_index = 2 # You may select anything up to 60,000
+#print(y[image_index]) # The label is 8
+#plt.imshow(x[image_index], cmap='Greys')
 
 D = 784 # Input dimension
 Odim = 10 # number of outputs
-layers=[(Odim, Linear)]
+layers=[(100, ReLU), (Odim, Linear)]
 
 # initialize Neural Network with D inputs and layers
 nn = NeuralNetwork(D, layers)
@@ -30,13 +34,15 @@ eta = 1e-1
 print(X.shape)
 #y.reshape(1, 60000)
 print(y.shape)
-print(y_test.shape)
-print(y)
+#print(y_test.shape)
+#print(y)
 
-for i in range(10000):
-    logp = nn.doForward(X)
-    J    = CE.doForward(logp, y)
-    dz   = CE.doBackward(y)
-    dx   = nn.doBackward(dz)
-    nn.updateWeights(eta)
+
+
+#for i in range(10000):
+#    logp = nn.doForward(X)
+#    J    = CE.doForward(logp, y)
+#    dz   = CE.doBackward(y)
+#    dx   = nn.doBackward(dz)
+#    nn.updateWeights(eta)
 

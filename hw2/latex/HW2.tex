@@ -204,13 +204,68 @@ from \cref{eqn:Jp,eqn:pz}, we can find $\frac{\partial{J}}{\partial{z_i}}$
 	& = - y_{i}(1 - p_{i}) + \sum_{i \neq j} y_{j} p_{i} \\
 	& = - y_{i} + y_{i}p_{i} + p_{i}  \sum_{j} y_{j} \\
 	& = p_{i} \left(y_{i} + \sum_{j} y_{j} \right) - y_{i} \\
+	& = p_{i} - y_{i}
 \end{aligned}
 \]
 
 Because y is one hot encoded and $\sum_{j}y_{j} = 1$
 \begin{equation}
-	\frac{\partial{J}}{\partial{z_i}} = p_{i} - y_{i}
+	\frac{\partial{J}}{\partial{z}} = 
+	\begin{bmatrix}
+		p_{0} - y_{0} \\
+		p_{1} - y_{1} \\
+		\vdots \\
+		p_{n} - y_{n}
+	\end{bmatrix}
 \end{equation}
+
+\section{Problem 4}
+
+We have 
+
+\begin{equation}
+	\boldsymbol{X} = 
+	\begin{bmatrix}
+		1 & 0 \\
+		0 & 1 
+	\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+	\boldsymbol{y} = 
+	\begin{bmatrix}
+		1 & 0 \\
+		0 & 1 
+	\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+	\boldsymbol{z = Wx + b}
+\end{equation}
+
+\subsection{1st Iteration:}
+	
+\begin{align*}
+	\boldsymbol{z = Wx + b} \\
+	= \begin{bmatrix}
+		0 & 0 \\
+		0 & 0 
+		\end{bmatrix}
+		\begin{bmatrix}
+		1 & 0 \\
+		0 & 1 
+		\end{bmatrix} +
+		\begin{bmatrix}
+		0 \\
+		0 
+		\end{bmatrix}
+		\begin{bmatrix}
+		1 & 1
+		\end{bmatrix}		
+\end{align*}
+
+
+
 
 
 
