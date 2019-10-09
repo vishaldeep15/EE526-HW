@@ -4,7 +4,7 @@ Created on Sun Oct  6 11:03:55 2019
 Problem: 5, Homework 2
 @author: vishal Deep
 """
-
+import time
 from DNN import *
 import numpy as np
 import matplotlib.pyplot as plt
@@ -46,10 +46,8 @@ y = spamBaseData.iloc[:, -1]
 spamEmails = spamBaseData.loc[y == 1]
 # filtet not spam
 notSpamEmails = spamBaseData.loc[y == 0]
-
 # split the train and test data
 [trainData, testData] = trainAndTestSplit(spamEmails, notSpamEmails)
-
 # seperate X and y of training and test data
 Xtrain = trainData[:, 0:-1]
 ytrain = trainData[:, -1]
@@ -59,7 +57,6 @@ ytest = testData[:, -1]
 X = np.transpose(Xtrain)
 y = np.transpose(ytrain)
 y = y.reshape(1,3066)
-print(y.shape)
 
 D = 57 # Input dimension
 Odim = 1 # number of outputs
@@ -70,8 +67,9 @@ nn = NeuralNetwork(D, layers)
 nn.setRandomWeights(0.1)
 # select crossentropy as objective function
 CE = ObjectiveFunction('logistic')
-eta = 1e-4
+eta = 1e-1
 
+startTime = np.round(time.time(), decimals=4)
 for i in range(10000):
     p = nn.doForward(X)
 #    print(logp.shape)
@@ -81,20 +79,15 @@ for i in range(10000):
     nn.updateWeights(eta)
     if (i%100==0):
       print( '\riter %d, J=%f' % (i, J), end='')
+stopTime = np.round(time.time(), decimals=4)
+totalTime = (np.round((stopTime - startTime), decimals=4))/60
+print(f'\nTraining time: {totalTime} minutes')
 
 # Prediction accuracy
 X_test = np.transpose(Xtest)
-print(X_test.shape)
 p = nn.doForward(X_test)
-print(p.shape)
-
 y_pred = generateLabel(p)
-print(y_pred.shape)
-
-print(ytest)
-
 # Performance calculations
 perfArr = np.equal(y_pred, ytest)
-print(perfArr)
 accuracy = (np.sum(perfArr)/np.size(perfArr)) * 100
 print(f'Accuracy: {accuracy}')
