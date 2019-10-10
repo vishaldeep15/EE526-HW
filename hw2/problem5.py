@@ -69,13 +69,13 @@ Odim = 1 # number of outputs
 layers=[ (100, ReLU), (40, ReLU), (Odim, Linear) ]    
 # initialize Neural Network with D inputs and layers
 nn = NeuralNetwork(D, layers)
-# set random weights with maximum size of 0.1
-nn.setRandomWeights(0.1)
 # select crossentropy as objective function
 CE = ObjectiveFunction('logistic')
 eta = [0.01, 0.1, 0.5, 1]
 
 for eta in eta:
+    # set random weights with maximum size of 0.1
+    nn.setRandomWeights(0.1)
     # Print value of eta being used    
     print(f"Learning rate: {eta}\n")    
     # Record start time 
