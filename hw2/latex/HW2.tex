@@ -281,67 +281,69 @@ We are using a softmax function, therefore p matrix is given by
 
 \begin{equation}
 	p^{[0]} = \begin{bmatrix}
-				\frac{e^{0}}{e^{0}+e^{0}+e^{0}+e^{0}} & \frac{e^{0}}{e^{0}+e^{0}+e^{0}+e^{0}} \\
-				\frac{e^{0}}{e^{0}+e^{0}+e^{0}+e^{0}} & \frac{e^{0}}{e^{0}+e^{0}+e^{0}+e^{0}} 
+				\frac{e^{0}}{e^{0}+e^{0}} & \frac{e^{0}}{e^{0}+e^{0}} \\
+				\frac{e^{0}}{e^{0}+e^{0}} & \frac{e^{0}}{e^{0}+e^{0}} 
 	    	  \end{bmatrix} = 
 	    	  \begin{bmatrix}
-				0.25 & 0.25 \\
-				0.25 & 0.25 
+				0.5 & 0.5 \\
+				0.5 & 0.5 
 	    	  \end{bmatrix}	
 \end{equation}
 
 and cost J is given by cross entropy function,
 
 \begin{align*}
-	J^{[0]} = - \sum_{i=1}^{4}y_{i}\log{p_{i}} = - \boldsymbol{y}(\boldsymbol{\log{p}})^{T}
-\end{align*}
-
-\begin{equation}
-	J^{[0]} = - 
+	J^{[0]} &= - \sum_{i=1}^{2}y_{i}\log{p_{i}} \\
+	&= - \sum_{i=1}^{2}y_{i}\log{p_{i}} 
 			\begin{bmatrix}
 				1 & 0 \\
 				0 & 1 
-	    	  \end{bmatrix}
+	    	  \end{bmatrix} .
 	    	  \begin{bmatrix}
-				\log{0.25} & \log{0.25} \\
-				\log{0.25} & \log{0.25} 
-	    	  \end{bmatrix}	    = -
+				\log{0.5} & \log{0.5} \\
+				\log{0.5} & \log{0.5} 
+	    	  \end{bmatrix}	
+\end{align*}
+
+\begin{equation}
+	J^{[0]}  = - \sum_{i=1}^{2}
 	    	  	\begin{bmatrix}
-				\log{0.25} & \log{0.25} \\
-				\log{0.25} & \log{0.25} 
-	    	  \end{bmatrix}	 
+				\log{0.5} & 0 \\
+				0 & \log{0.5} 
+	    	  \end{bmatrix} \approx 0.6931
 \end{equation}
 
 Now doing back propagation, from \cref{eqn:dz}
 \begin{equation}
-	\boldsymbol{dz}^{[0]} = \boldsymbol{p} - \boldsymbol{y}	= 
+	\boldsymbol{dz}^{[0]} = \frac{1}{m}(\boldsymbol{p} - \boldsymbol{y}) = 
+				\frac{1}{2}				
 				\begin{bmatrix}
-				0.25 & 0.25 \\
-				0.25 & 0.25 
+				0.5 & 0.5 \\
+				0.5 & 0.5 
 	    	  \end{bmatrix}	- 
 	    	  \begin{bmatrix}
 				1 & 0 \\
 				0 & 1 
 	    	  \end{bmatrix}	=
 	    	   \begin{bmatrix}
-				-0.75 & 0.25 \\
-				0.25 & -0.75 
+				-0.25 & 0.25 \\
+				0.25 & -0.25 
 	    	  \end{bmatrix}	
 \end{equation}
 
 \begin{equation}
 	\boldsymbol{dW}^{[0]} = \boldsymbol{dz^{[0]}} \boldsymbol{X^{T}}	= 
 			\begin{bmatrix}
-				-0.75 & 0.25 \\
-				0.25 & -0.75 
+				-0.25 & 0.25 \\
+				0.25 & -0.25 
 	    	  \end{bmatrix}	
 	    	  \begin{bmatrix}
 				1 & 0 \\
 				0 & 1 
 	    	  \end{bmatrix} =
 	    	    \begin{bmatrix}
-				-0.75 & 0.25 \\
-				0.25 & -0.75 
+				-0.25 & 0.25 \\
+				0.25 & -0.25 
 	    	  \end{bmatrix}	  
 \end{equation}
 
@@ -351,16 +353,16 @@ Now doing back propagation, from \cref{eqn:dz}
 				1 
 	    	  \end{bmatrix}	= 	    	  
 	    	  \begin{bmatrix}
-				-0.75 & 0.25 \\
-				0.25 & -0.75 
+				-0.25 & 0.25 \\
+				0.25 & -0.25 
 	    	  \end{bmatrix}	
 	    	   \begin{bmatrix}
 				1 \\
 				1 
 	    	  \end{bmatrix} = 
 	    	  \begin{bmatrix}
-				-0.5 \\
-				-0.5 
+				0 \\
+				0 
 	    	  \end{bmatrix}
 \end{equation}
 
@@ -372,12 +374,12 @@ Now update weights and bias matrices with learning rate = 1,
 		0 & 0 
 	    \end{bmatrix} - 
 	     \begin{bmatrix}
-			-0.75 & 0.25 \\
-			0.25 & -0.75 
+			-0.25 & 0.25 \\
+			0.25 & -0.25 
 	   	\end{bmatrix}	  =	   	
 	   	\begin{bmatrix}
-		0.75 & -0.25 \\
-		-0.25 & 0.75
+		0.25 & -0.25 \\
+		-0.25 & 0.25
 	   	\end{bmatrix}	    
 \end{equation}
 
@@ -388,12 +390,12 @@ Now update weights and bias matrices with learning rate = 1,
 		0 
 	 \end{bmatrix} - 
 	  \begin{bmatrix}
-		-0.5 \\
-		-0.5 
+		0 \\
+		0 
 	  \end{bmatrix} = 
 	 \begin{bmatrix}
-		0.5 \\
-		0.5 
+		0 \\
+		0 
 	  \end{bmatrix} 	 
 \end{equation}
 
@@ -402,16 +404,16 @@ Now update weights and bias matrices with learning rate = 1,
 \begin{align*}
 	z^{[1]} &= W^{[1]}x + b^{[1]}.1 \\
 	&= 	\begin{bmatrix}
-			0.75 & -0.25 \\
-			-0.25 & 0.75
+			0.25 & -0.25 \\
+			-0.25 & 0.25
 	   	\end{bmatrix}
 		\begin{bmatrix}
 		1 & 0 \\
 		0 & 1 
 		\end{bmatrix} +
 		\begin{bmatrix}
-		0.5 \\
-		0.5 
+		0 \\
+		0 
 		\end{bmatrix}
 		\begin{bmatrix}
 		1 & 1
@@ -420,8 +422,8 @@ Now update weights and bias matrices with learning rate = 1,
 
 \begin{equation}
 	z^{[1]} = \begin{bmatrix}
-				0.25 & -0.75 \\
-				-0.75 & 0.25 
+				0.25 & -0.25 \\
+				-0.25 & 0.25 
 	    	  \end{bmatrix}
 \end{equation}
 
@@ -429,64 +431,70 @@ Softmax function with $z^{[1]}$,
 
 
 \begin{equation}
-	p^{[1]} = \frac{e^{z_i}}{\sum_{i=1}^{4}e^{z_i}} = 
+	p^{[1]} = \frac{e^{z_i}}{\sum_{i=1}^{2}e^{z_i}} = 
+				\begin{bmatrix}
+				\frac{e^{0.25}}{e^{0.25}+e^{-0.25}} & \frac{e^{-0.25}}{e^{0.25}+e^{-0.25}} \\
+				\frac{e^{-0.25}}{e^{0.25}+e^{-0.25}} & \frac{e^{0.25}}{e^{0.25}+e^{-0.25}} 
+	    	  \end{bmatrix} = 
 	    	  \begin{bmatrix}
-				0.365 & 0.134 \\
-				0.134 & 0.365
+				0.62 & 0.38 \\
+				0.38 & 0.62
 	    	  \end{bmatrix}	
 \end{equation}
 
 \begin{align*}
-	J^{[1]} = - \sum_{i=1}^{4}y_{i}\log{p_{i}} = - \boldsymbol{y}(\boldsymbol{\log{p}})^{T}
-\end{align*}
-
-\begin{equation}
-	J^{[1]} = - 
+	J^{[1]} &= - \sum_{i=1}^{2}y_{i}\log{p_{i}} \\
+	&= - \sum_{i=1}^{2} 
 			\begin{bmatrix}
 				1 & 0 \\
 				0 & 1 
-	    	  \end{bmatrix}
+	    	  \end{bmatrix} .
 	    	  \begin{bmatrix}
-				\log{0.365} & \log{0.134} \\
-				\log{0.134} & \log{0.365} 
-	    	  \end{bmatrix}	    = -
-	    	  	\begin{bmatrix}
-				\log{0.365} & \log{0.134} \\
-				\log{0.134} & \log{0.365} 
-	    	  \end{bmatrix}
+				\log{0.62} & \log{0.38} \\
+				\log{0.38} & \log{0.62} 
+	    	  \end{bmatrix}	
+\end{align*}
+
+\begin{equation}
+	J^{[1]} = - \sum_{i=1}^{2}
+			  \begin{bmatrix}
+				\log{0.62} & 0 \\
+				0 & \log{0.62} 
+	    	  \end{bmatrix}	\approx 0.4741	    
 \end{equation}
 
 Now doing back propagation, from \cref{eqn:dz}
 \begin{equation}
-	\boldsymbol{dz}^{[1]} = \boldsymbol{p} - \boldsymbol{y}	= 
+	\boldsymbol{dz}^{[1]} = \frac{1}{m}(\boldsymbol{p} - \boldsymbol{y}) = 
+				\frac{1}{2}				
 				\begin{bmatrix}
-				0.365 & 0.134 \\
-				0.134 & 0.365
-	    	  \end{bmatrix}		- 
+				0.62 & 0.38 \\
+				0.38 & 0.62 
+	    	  \end{bmatrix}	- 
 	    	  \begin{bmatrix}
 				1 & 0 \\
 				0 & 1 
 	    	  \end{bmatrix}	=
 	    	   \begin{bmatrix}
-				-0.634 & 0.134 \\
-				0.134 & -0.634 
+				-0.19 & 0.19 \\
+				0.19 & -0.19 
 	    	  \end{bmatrix}	
 \end{equation}
 
 \begin{equation}
 	\boldsymbol{dW}^{[1]} = \boldsymbol{dz^{[1]}} \boldsymbol{X^{T}}	= 
 			\begin{bmatrix}
-				-0.634 & 0.134 \\
-				0.134 & -0.634 
+				-0.19 & 0.19 \\
+				0.19 & -0.19 
 	    	  \end{bmatrix}	
 	    	  \begin{bmatrix}
 				1 & 0 \\
 				0 & 1 
 	    	  \end{bmatrix} =
 	    	   \begin{bmatrix}
-				-0.634 & 0.134 \\
-				0.134 & -0.634 
-	    	  \end{bmatrix}	  
+				-0.19 & 0.19 \\
+				0.19 & -0.19 
+	    	  \end{bmatrix}	
 \end{equation}
 
 \begin{equation}
@@ -495,49 +503,49 @@ Now doing back propagation, from \cref{eqn:dz}
 				1 
 	    	  \end{bmatrix}	= 	    	  
 	    	  \begin{bmatrix}
-				-0.634 & 0.134 \\
-				0.134 & -0.634 
-	    	  \end{bmatrix}
+				-0.19 & 0.19 \\
+				0.19 & -0.19 
+	    	  \end{bmatrix}	
 	    	   \begin{bmatrix}
 				1 \\
 				1 
 	    	  \end{bmatrix} = 
 	    	  \begin{bmatrix}
-				-0.5 \\
-				-0.5 
+				0 \\
+				0 
 	    	  \end{bmatrix}
 \end{equation}
 
 Now update weights and bias matrices with learning rate = 1,
 \begin{equation}
 	\boldsymbol{W}^{[2]} = \boldsymbol{W^{[1]}} - 1. \boldsymbol{dW^{[1]}} =
-		\begin{bmatrix}
-			0.75 & -0.25 \\
-			-0.25 & 0.75
-	   	\end{bmatrix} - 
-	     \begin{bmatrix}
-			-0.634 & 0.134 \\
-			0.134 & -0.634 
-	    \end{bmatrix}	  =	   	
+  		\begin{bmatrix}
+		0.25 & -0.25 \\
+		-0.25 & 0.25
+	   	\end{bmatrix}	- 
+	      \begin{bmatrix}
+				-0.19 & 0.19 \\
+				0.19 & -0.19 
+	    	  \end{bmatrix}	  =	   	
 	   	\begin{bmatrix}
-		1.384 & -0.384 \\
-		-0.384 & 1.384
+		0.44 & -0.44 \\
+		-0.44 & 0.44
 	   	\end{bmatrix}	    
 \end{equation}
 
 \begin{equation}
 	\boldsymbol{b}^{[2]} = \boldsymbol{b^{[1]}} - 1. \boldsymbol{db^{[1]}} =
 	 \begin{bmatrix}
-		0.5 \\
-		0.5 
+		0 \\
+		0
 	  \end{bmatrix}  - 
 	  \begin{bmatrix}
-		-0.5 \\
-		-0.5 
+		0 \\
+		0 
 	  \end{bmatrix} = 
 	 \begin{bmatrix}
-		1 \\
-		1 
+		0 \\
+		0 
 	  \end{bmatrix} 	 
 \end{equation}
 
@@ -545,9 +553,7 @@ Now update weights and bias matrices with learning rate = 1,
 
 \inputpython{pythonfiles/problem5.py}{1}{103}
 
-
-
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[language=Python, basicstyle=\tiny]
 Learning rate: 0.01
 
 Iterations: 0, J=113.6054, Training Accuracy: 39.3999 % 
@@ -611,6 +617,88 @@ Iterations: 8000, J=0.5643, Training Accuracy: 60.6001 %
 Training time: 1.6626 minutes 
 
 Test dataset accuracy: 60.5863 % 
+\end{lstlisting}
+
+\section{Problem 6}
+
+\inputpython{pythonfiles/problem6.py}{1}{157}
+
+\begin{lstlisting}[language=Python, basicstyle=\tiny]
+Learning rate: 0.01
+
+Batch Completed: 20
+
+Training time NN_a: 0.0902 minutes 
+
+Training time NN_b: 0.0902 minutes 
+
+Training time NN_c: 0.3624 minutes 
+
+Iterations: 9999, J=0.0069, Training Accuracy: 8.5 % 
+
+Iterations: 9999, J=0.0002, Training Accuracy: 8.5 % 
+
+Iterations: 9999, J=0.0003, Training Accuracy: 8.5 % 
+
+Batch Completed: 40
+
+Training time NN_a: 0.0816 minutes 
+
+Training time NN_b: 0.0816 minutes 
+
+Training time NN_c: 0.3494 minutes 
+
+Iterations: 9999, J=0.007, Training Accuracy: 7.3 % 
+
+Iterations: 9999, J=0.0002, Training Accuracy: 7.3 % 
+
+Iterations: 9999, J=0.0002, Training Accuracy: 7.3 % 
+
+Batch Completed: 60
+
+Training time NN_a: 0.087 minutes 
+
+Training time NN_b: 0.087 minutes 
+
+Training time NN_c: 0.3454 minutes 
+
+Iterations: 9999, J=0.0065, Training Accuracy: 11.9 % 
+
+Iterations: 9999, J=0.0001, Training Accuracy: 11.9 % 
+
+Iterations: 9999, J=0.0002, Training Accuracy: 11.9 % 
+
+Batch Completed: 80
+
+Training time NN_a: 0.1017 minutes 
+
+Training time NN_b: 0.1017 minutes 
+
+Training time NN_c: 0.3458 minutes 
+
+Iterations: 9999, J=0.0054, Training Accuracy: 14.9 % 
+
+Iterations: 9999, J=0.0001, Training Accuracy: 14.9 % 
+
+Iterations: 9999, J=0.0001, Training Accuracy: 14.9 % 
+
+Batch Completed: 100
+
+Training time NN_a: 0.0844 minutes 
+
+Training time NN_b: 0.0844 minutes 
+
+Training time NN_c: 0.3437 minutes 
+
+Iterations: 9999, J=0.0065, Training Accuracy: 7.2 % 
+
+Iterations: 9999, J=0.0001, Training Accuracy: 7.2 % 
+
+Iterations: 9999, J=0.0001, Training Accuracy: 7.2 % 
+
+Test Accuracy NN_a: 10.05%
+Test Accuracy NN_b: 10.09%
+Test Accuracy NN_c: 9.86%
 \end{lstlisting}
 
 
