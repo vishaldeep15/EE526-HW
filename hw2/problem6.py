@@ -44,8 +44,8 @@ X = x.transpose((1, 2, 0)).reshape(784, -1)
 X_norm = np.divide(X, 255)
 
 if testFlag:
-    X_norm = X_norm[:, 0:1000]
-    y = y[0:1000]
+    X_norm = X_norm[:, 0:10000]
+    y = y[0:10000]
 
 # Create mini batches of 100    
 mini_batches = createMiniBatches(X_norm, y, 100)
@@ -91,10 +91,7 @@ for batch in mini_batches:
         dz_a   = CE_a.doBackward(y)
         dx_a   = nn_a.doBackward(dz_a)
         nn_a.updateWeights(eta)
-#        if (i%1000==0):
-#            accuracy_a = np.round(calcAccuracy(logp_a, y), decimals=4)
-#            J_a = np.round(J_a, decimals=4)
-#            print(f'Iterations: {i}, J={J_a}, Training Accuracy: {accuracy_a} % \n')    
+
     stopTime = np.round(time.time(), decimals=4)
     totalTime_a = np.round(((stopTime - startTime)/60), decimals=4)
 #    print(f'Training time NN_a: {totalTime} minutes \n')
@@ -107,11 +104,7 @@ for batch in mini_batches:
         dz_b   = CE_b.doBackward(y)
         dx_b   = nn_b.doBackward(dz_b)
         nn_b.updateWeights(eta)
-#        if (i%1000==0):
-#            accuracy_b = np.round(calcAccuracy(logp_b, y), decimals=4)
-#            J_b = np.round(J_b, decimals=4)
-#            print(f'Iterations: {i}, J={J_b}, Training Accuracy: {accuracy_b} % \n')    
-#    if (batchCount%5 == 0):      
+
     stopTime = np.round(time.time(), decimals=4)
     totalTime_b = np.round(((stopTime - startTime)/60), decimals=4)
 #    print(f'Training time NN_b: {totalTime} minutes \n')
@@ -124,16 +117,12 @@ for batch in mini_batches:
         dz_c   = CE_c.doBackward(y)
         dx_c   = nn_c.doBackward(dz_c)
         nn_c.updateWeights(eta)
-#        if (i%1000==0):
-#            accuracy_c = np.round(calcAccuracy(logp_c, y), decimals=4)
-#            J_c = np.round(J_c, decimals=4)
-#            print(f'Iterations: {i}, J={J_c}, Training Accuracy: {accuracy_c} % \n')    
        
     stopTime = np.round(time.time(), decimals=4)
     totalTime_c = np.round(((stopTime - startTime)/60), decimals=4)
-#        print(f'Training time NN_c: {totalTime} minutes \n')
+#   print(f'Training time NN_c: {totalTime} minutes \n')
     
-    if (batchCount%100 == 0):
+    if (batchCount%20 == 0):
         print(f"Batch Completed: {batchCount}\n")
         print(f'Training time NN_a: {totalTime_a} minutes \n')
         print(f'Training time NN_b: {totalTime_a} minutes \n')
