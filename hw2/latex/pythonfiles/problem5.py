@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Oct  6 11:03:55 2019
+Created on Sun Oct  4 11:03:55 2019
 Problem: 5, Homework 2
 @author: vishal Deep
 """
@@ -38,6 +38,12 @@ def generateLabel(y_pred):
     y_pred[y_pred > 0] = 1
     return np.transpose(y_pred)
 
+def calcAccuracy(p, y):
+    y_pred = generateLabel(p)
+    perfArr = np.equal(y_pred, y)
+    accuracy = (np.sum(perfArr)/np.size(perfArr)) * 100
+    return accuracy
+
 # read data from the file
 spamBaseData = pd.read_csv("spambase/spambase.data", header=None)
 # Extract label y 
@@ -55,8 +61,8 @@ Xtest = testData[:, 0:-1]
 ytest = testData[:, -1]
 
 X = np.transpose(Xtrain)
-y = np.transpose(ytrain)
-y = y.reshape(1,3066)
+
+y = ytrain.reshape(1, 3066)
 
 D = 57 # Input dimension
 Odim = 1 # number of outputs
@@ -67,27 +73,31 @@ nn = NeuralNetwork(D, layers)
 nn.setRandomWeights(0.1)
 # select crossentropy as objective function
 CE = ObjectiveFunction('logistic')
-eta = 1e-1
+eta = [0.01, 0.1, 0.5, 1]
 
-startTime = np.round(time.time(), decimals=4)
-for i in range(10000):
-    p = nn.doForward(X)
-#    print(logp.shape)
-    J    = CE.doForward(p, y)
-    dz   = CE.doBackward(y)
-    dx   = nn.doBackward(dz)
-    nn.updateWeights(eta)
-    if (i%100==0):
-      print( '\riter %d, J=%f' % (i, J), end='')
-stopTime = np.round(time.time(), decimals=4)
-totalTime = np.round((stopTime - startTime), decimals=4)
-print(f'\nTraining time: {totalTime} seconds')
-
-# Prediction accuracy
-X_test = np.transpose(Xtest)
-p = nn.doForward(X_test)
-y_pred = generateLabel(p)
-# Performance calculations
-perfArr = np.equal(y_pred, ytest)
-accuracy = (np.sum(perfArr)/np.size(perfArr)) * 100
-print(f'Accuracy: {accuracy}')
+for eta in eta:
+    # Print value of eta being used    
+    print(f"Learning rate: {eta}\n")    
+    # Record start time 
+    startTime = np.round(time.time(), decimals=4)
+    for i in range(10000):
+        p = nn.doForward(X)
+        J    = CE.doForward(p, y)
+        dz   = CE.doBackward(y)
+        dx   = nn.doBackward(dz)
+        nn.updateWeights(eta)
+        if (i%2000==0):
+            accuracy = np.round(calcAccuracy(p, y), decimals=4)
+            J_rounded = np.round(J, decimals=4)
+            print(f'Iterations: {i}, J={J_rounded}, Training Accuracy: {accuracy} % \n') 
+    
+    # Calculate time taken to train      
+    stopTime = np.round(time.time(), decimals=4)
+    totalTime = (np.round(((stopTime - startTime)/60), decimals=4))
+    print(f'Training time: {totalTime} minutes \n')
+    
+    # Test dataset Prediction accuracy
+    X_test = np.transpose(Xtest)
+    p = nn.doForward(X_test)
+    accuracy = np.round(calcAccuracy(p, ytest), decimals=4)
+    print(f'Test dataset accuracy: {accuracy} % \n')
