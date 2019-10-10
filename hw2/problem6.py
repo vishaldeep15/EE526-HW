@@ -102,10 +102,10 @@ for batch in mini_batches:
     # Train network b with training data
     startTime = np.round(time.time(), decimals=4)
     for i in range(numOfIterations):
-        logp_b = nn_a.doForward(X)
-        J_b    = CE_a.doForward(logp_b, y)
-        dz_b   = CE_a.doBackward(y)
-        dx_b   = nn_a.doBackward(dz_b)
+        logp_b = nn_b.doForward(X)
+        J_b    = CE_b.doForward(logp_b, y)
+        dz_b   = CE_b.doBackward(y)
+        dx_b   = nn_b.doBackward(dz_b)
         nn_b.updateWeights(eta)
 #        if (i%1000==0):
 #            accuracy_b = np.round(calcAccuracy(logp_b, y), decimals=4)
