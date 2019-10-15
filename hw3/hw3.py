@@ -11,8 +11,8 @@ import tensorflow as tf
 from keras.utils import to_categorical
 from sklearn import preprocessing
 import time
-#from tensorflow.examples.tutorials.mnist import input_data
-#mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
+from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 # Return a batch of training data
 def next_batch(batchSize, X, y):    
@@ -26,25 +26,25 @@ def next_batch(batchSize, X, y):
 
 # Python optimisation variables
 learning_rate = 0.5
-epochs = 10
-batch_size = 100
+epochs = 100
+batch_size =500
 
 #Get data from tensor flow keras
-mnist = tf.keras.datasets.mnist
-# Split data between train and test data
-(x, y),(x_test, y_test) = mnist.load_data()
-# flatten the image data for all 60000 images
-X = x.transpose((0, 1, 2)).reshape(-1, 784)
-# Normalize data
-#X = np.divide(X, 255)
-y = to_categorical(y)
-#y = np.transpose(to_categorical(y))
-
-total_batch = int(y.shape[0] / batch_size)
-
-print(X.shape)
-print(y)
-print(total_batch)
+#mnist = tf.keras.datasets.mnist
+## Split data between train and test data
+#(x, y),(x_test, y_test) = mnist.load_data()
+## flatten the image data for all 60000 images
+#X = x.transpose((0, 1, 2)).reshape(-1, 784)
+## Normalize data
+##X = np.divide(X, 255)
+#y = to_categorical(y)
+##y = np.transpose(to_categorical(y))
+#
+#total_batch = int(y.shape[0] / batch_size)
+#
+#print(X.shape)
+#print(y)
+#print(total_batch)
 
 
 # Placeholders for X and y
@@ -89,16 +89,16 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 with tf.Session() as sess:
    # initialise the variables
    sess.run(init_op)
-#   total_batch = int(len(mnist.train.labels) / batch_size)
+   total_batch = int(len(mnist.train.labels) / batch_size)
    for epoch in range(epochs):
         avg_cost = 0
         for i in range(total_batch):
-#            batch_x, batch_y = mnist.train.next_batch(batch_size=batch_size)
-            batch_x, batch_y = next_batch(batch_size, X, y)
-            print(batch_x.shape)
-            print(batch_y.shape)
+            batch_x, batch_y = mnist.train.next_batch(batch_size=batch_size)
+#            batch_x, batch_y = next_batch(batch_size, X, y)
+#            print(batch_x.shape)
+#            print(batch_y.shape)
             _, c = sess.run([optimiser, cross_entropy], 
                          feed_dict={x: batch_x, y: batch_y})
             avg_cost += c / total_batch
         print("Epoch:", (epoch + 1), "cost =", "{:.3f}".format(avg_cost))
-#   print(sess.run(accuracy, feed_dict={x: mnist.test.images, y: mnist.test.labels}))
+   print(sess.run(accuracy, feed_dict={x: mnist.test.images, y: mnist.test.labels}))
