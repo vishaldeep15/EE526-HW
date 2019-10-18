@@ -12,8 +12,8 @@ from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 # Set up learning rate, epochs, and batch size
-learningRate = 0.5
-epochsArr = [10, 100, 250, 500]
+learningRate = 0.01
+epochsArr = [10, 50, 100]
 batch_size = 500
 
 total_batch = int(len(mnist.train.labels) / batch_size)
@@ -37,11 +37,26 @@ def calcAccuracy(logit, y):
     accuracy = tf.reduce_mean(tf.cast(accuratePredictions, tf.float32))
     return accuracy
 
+def logStat(nEpochs, epoch, avg_cost, accuracy):
+    if nEpochs <= 10:
+        if (epoch%2 == 0):
+            print("Epoch: {}".format(epoch+1), "Cost: {:f}".format(avg_cost), "Training Acc: {:f}".format(accuracy))
+    elif nEpochs > 10 and epochs <= 50:
+        if (epoch%10 == 0):
+            print("Epoch: {}".format(epoch+1), "Cost: {:f}".format(avg_cost), "Training Acc: {:f}".format(accuracy))
+    elif nEpochs > 50 and nEpochs <= 100:
+        if (epoch%20 == 0):
+            print("Epoch: {}".format(epoch+1), "Cost: {:f}".format(avg_cost), "Training Acc: {:f}".format(accuracy))
+    else:
+        if (epoch%100 == 0):
+            print("Epoch: {}".format(epoch+1), "Cost: {:f}".format(avg_cost), "Training Acc: {:f}".format(accuracy))
+
 # Placeholders for X and y
 x = tf.placeholder(tf.float32, [None, 784])
 y = tf.placeholder(tf.float32, [None, 10])
 
 for epochs in epochsArr:
+    print("Number of epochs: {}".format(epochs))
     # First Neural Network
     # Layer 1
     l1_out_nn1 = layer(784, 10, x, 'Linear')
@@ -67,10 +82,9 @@ for epochs in epochsArr:
                 _, c = sess.run([optimizer_nn1, ce_nn1], feed_dict={x: XBatch, y: yBatch})
                 avg_cost += c / total_batch
             trainAcc_nn1 = sess.run(accuracy_nn1, feed_dict={x: XBatch, y: yBatch})
-            print(f"Epoch: {epoch+1} Cost: {avg_cost} Training Acc: {trainAcc_nn1}")
-        
+            logStat(epochs, epoch, avg_cost, trainAcc_nn1)
         testAcc_nn1 = sess.run(accuracy_nn1, feed_dict={x: mnist.test.images, y: mnist.test.labels})
-        print(f"Test Accuracy: {testAcc_nn1}")
+        print("Test Accuracy: {:f}".format(testAcc_nn1))
     
     print("========== NN1 session Completed ==========")
     
@@ -101,10 +115,10 @@ for epochs in epochsArr:
                 _, c = sess.run([optimizer_nn2, ce_nn2], feed_dict={x: XBatch, y: yBatch})
                 avg_cost += c / total_batch
             trainAcc_nn2 = sess.run(accuracy_nn2, feed_dict={x: XBatch, y: yBatch})
-            print(f"Epoch: {epoch+1} Cost: {avg_cost} Training Acc: {trainAcc_nn2}")
-    
+#            print("Epoch: {}".format(epoch+1), "Cost: {:f}".format(avg_cost), "Training Acc: {:f}".format(trainAcc_nn2))
+            logStat(epochs, epoch, avg_cost, trainAcc_nn2)    
         
         testAcc_nn2 = sess.run(accuracy_nn2, feed_dict={x: mnist.test.images, y: mnist.test.labels})
-        print(f"Test Accuracy: {testAcc_nn2}")
+        print("Test Accuracy: {:f}".format(testAcc_nn2))
     
     print("========== NN2 session Completed ==========")
