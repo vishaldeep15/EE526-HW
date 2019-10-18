@@ -5,37 +5,18 @@ Created on Sun Oct 13 15:20:36 2019
 
 @author: vishal
 """
-
-import numpy as np 
 import tensorflow as tf
-from keras.utils import to_categorical
-from sklearn import preprocessing
-import time
+
+# Import Data
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 # Set up learning rate, epochs, and batch size
-learning_rate = 0.5
-epochs = 10
-batch_size =500
+learningRate = 0.5
+epochsArr = [10, 100, 250, 500]
+batch_size = 500
 
 total_batch = int(len(mnist.train.labels) / batch_size)
-#Get data from tensor flow keras
-#mnist = tf.keras.datasets.mnist
-## Split data between train and test data
-#(x, y),(x_test, y_test) = mnist.load_data()
-## flatten the image data for all 60000 images
-#X = x.transpose((0, 1, 2)).reshape(-1, 784)
-## Normalize data
-##X = np.divide(X, 255)
-#y = to_categorical(y)
-##y = np.transpose(to_categorical(y))
-#
-#total_batch = int(y.shape[0] / batch_size)
-#
-#print(X.shape)
-#print(y)
-#print(total_batch)
 
 def layer(nInput, nOutput, X, activation):
     W = tf.Variable(tf.random_normal([nInput, nOutput], stddev=0.01))
@@ -49,90 +30,81 @@ def layer(nInput, nOutput, X, activation):
         raise ValueError('activation values can only be ReLu or Linear')
     return nOut
 
+def calcAccuracy(logit, y):
+    # find max value from y and logit and compare it
+    accuratePredictions = tf.equal(tf.argmax(y, 1), tf.argmax(logit, 1))
+    # Cast to a float32 and calculate mean
+    accuracy = tf.reduce_mean(tf.cast(accuratePredictions, tf.float32))
+    return accuracy
+
 # Placeholders for X and y
 x = tf.placeholder(tf.float32, [None, 784])
 y = tf.placeholder(tf.float32, [None, 10])
 
-# First Neural Network
-l1_out = layer(784, 10, x, 'Linear')
-# y_prob = tf.nn.softmax(l1_out)
-# ce = tf.reduce_mean(-tf.reduce_sum(y_prob * tf.log(y), reduction_indices=[1]))
-ce = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=l1_out, labels=y))
-
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate).minimize(ce)
-# finally setup the initialisation operator
-init_op = tf.global_variables_initializer()
-
-# define an accuracy assessment operation
-correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(l1_out, 1))
-accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
-# start the session
-with tf.Session() as sess:
-    # initialise the variables
-    sess.run(init_op)
-   
-    for epoch in range(epochs):
-        avg_cost = 0
-        for i in range(total_batch):
-            XBatch, yBatch = mnist.train.next_batch(batch_size=batch_size)
-            _, c = sess.run([optimizer, ce], feed_dict={x: XBatch, y: yBatch})
-            avg_cost += c / total_batch
-        print("Epoch:", (epoch + 1), "cost =", "{:.3f}".format(avg_cost))
-
+for epochs in epochsArr:
+    # First Neural Network
+    # Layer 1
+    l1_out_nn1 = layer(784, 10, x, 'Linear')
+    # Softmax + cross Entropy
+    ce_nn1 = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=l1_out_nn1, labels=y))
+    # Optimizer Gradient Descent
+    optimizer_nn1 = tf.train.GradientDescentOptimizer(learning_rate=learningRate).minimize(ce_nn1)
+    # Initialize variables
+    init = tf.global_variables_initializer()
+    # calculate accuracy
+    accuracy_nn1 = calcAccuracy(l1_out_nn1, y)
     
-    testAcc = sess.run(accuracy, feed_dict={x: mnist.test.images, y: mnist.test.labels})
-    print("Test Accuracy: ", testAcc)
-
-
-# now declare the weights connecting the input to the hidden layer
-# W1 = tf.Variable(tf.random_normal([784, 50], stddev=0.01), name='W1')
-# b1 = tf.Variable(tf.random_normal([50]), name='b1')
-# # and the weights connecting the hidden layer to the output layer
-# W2 = tf.Variable(tf.random_normal([50, 50], stddev=0.01), name='W2')
-# b2 = tf.Variable(tf.random_normal([50]), name='b2')
-
-# W3 = tf.Variable(tf.random_normal([50, 10], stddev=0.01), name='W3')
-# b3 = tf.Variable(tf.random_normal([10]), name='b3')
-# # calculate the output of the hidden layer
-# hidden_out1 = tf.add(tf.matmul(x, W1), b1)
-# hidden_out1 = tf.nn.relu(hidden_out1)
-# hidden_out2 = tf.add(tf.matmul(hidden_out1, W2), b2)
-# hidden_out2 = tf.nn.relu(hidden_out2)
-
-
-# # now calculate the hidden layer output - in this case, let's use a softmax activated
-# # output layer
-# y_ = tf.nn.softmax(tf.add(tf.matmul(hidden_out2, W3), b3))
-
-# y_clipped = tf.clip_by_value(y_, 1e-10, 0.9999999)
-# cross_entropy = -tf.reduce_mean(tf.reduce_sum(y * tf.log(y_clipped)
-#                          + (1 - y) * tf.log(1 - y_clipped), axis=1))
-
-# # add an optimiser
-# optimiser = tf.train.GradientDescentOptimizer(learning_rate=learning_rate).minimize(cross_entropy)  
-
-# # finally setup the initialisation operator
-# init_op = tf.global_variables_initializer()
-
-# # define an accuracy assessment operation
-# correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
-# accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
-# # start the session
-# with tf.Session() as sess:
-#    # initialise the variables
-#    sess.run(init_op)
-#    total_batch = int(len(mnist.train.labels) / batch_size)
-#    for epoch in range(epochs):
-#         avg_cost = 0
-#         for i in range(total_batch):
-#             batch_x, batch_y = mnist.train.next_batch(batch_size=batch_size)
-# #            batch_x, batch_y = next_batch(batch_size, X, y)
-# #            print(batch_x.shape)
-# #            print(batch_y.shape)
-#             _, c = sess.run([optimiser, cross_entropy], 
-#                          feed_dict={x: batch_x, y: batch_y})
-#             avg_cost += c / total_batch
-#         print("Epoch:", (epoch + 1), "cost =", "{:.3f}".format(avg_cost))
-#    print(sess.run(accuracy, feed_dict={x: mnist.test.images, y: mnist.test.labels}))
+    print("========== NN1 session starts ==========")
+    # start the session
+    with tf.Session() as sess:
+        # initialise the variables
+        sess.run(init)
+       
+        for epoch in range(epochs):
+            avg_cost = 0
+            for i in range(total_batch):
+                XBatch, yBatch = mnist.train.next_batch(batch_size=batch_size)
+                _, c = sess.run([optimizer_nn1, ce_nn1], feed_dict={x: XBatch, y: yBatch})
+                avg_cost += c / total_batch
+            trainAcc_nn1 = sess.run(accuracy_nn1, feed_dict={x: XBatch, y: yBatch})
+            print(f"Epoch: {epoch+1} Cost: {avg_cost} Training Acc: {trainAcc_nn1}")
+        
+        testAcc_nn1 = sess.run(accuracy_nn1, feed_dict={x: mnist.test.images, y: mnist.test.labels})
+        print(f"Test Accuracy: {testAcc_nn1}")
+    
+    print("========== NN1 session Completed ==========")
+    
+    # Second Neural Network
+    l1_out_nn2 = layer(784, 50, x, 'ReLu')
+    l2_out_nn2 = layer(50, 50, l1_out_nn2, 'ReLu')
+    l3_out_nn2 = layer(50, 10, l2_out_nn2, 'Linear')
+    
+    # Softmax + cross Entropy
+    ce_nn2 = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=l3_out_nn2, labels=y))
+    # Optimizer Gradient Descent
+    optimizer_nn2 = tf.train.GradientDescentOptimizer(learning_rate=learningRate).minimize(ce_nn2)
+    # finally setup the initialisation operator
+    init = tf.global_variables_initializer()
+    # calculate accuracy
+    accuracy_nn2 = calcAccuracy(l3_out_nn2, y)
+    
+    print("========== NN2 session starts ==========")
+    # start the session
+    with tf.Session() as sess:
+        # initialise the variables
+        sess.run(init)
+       
+        for epoch in range(epochs):
+            avg_cost = 0
+            for i in range(total_batch):
+                XBatch, yBatch = mnist.train.next_batch(batch_size=batch_size)
+                _, c = sess.run([optimizer_nn2, ce_nn2], feed_dict={x: XBatch, y: yBatch})
+                avg_cost += c / total_batch
+            trainAcc_nn2 = sess.run(accuracy_nn2, feed_dict={x: XBatch, y: yBatch})
+            print(f"Epoch: {epoch+1} Cost: {avg_cost} Training Acc: {trainAcc_nn2}")
+    
+        
+        testAcc_nn2 = sess.run(accuracy_nn2, feed_dict={x: mnist.test.images, y: mnist.test.labels})
+        print(f"Test Accuracy: {testAcc_nn2}")
+    
+    print("========== NN2 session Completed ==========")
