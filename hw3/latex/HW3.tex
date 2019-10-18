@@ -1,0 +1,311 @@
+\documentclass[letter, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{lipsum} %This package just generates Lorem Ipsum filler text. 
+\usepackage{fullpage} % changes the margin
+\usepackage{listings} % code formatting
+\usepackage{enumitem} % change enumeration counter
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{pythonhighlight}
+\usepackage{listings}
+
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+}
+
+\begin{document}
+	
+\begin{titlepage}
+	
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+	
+	\center % Center everything on the page
+	
+	%----------------------------------------------------------------------------------------
+	%	HEADING SECTIONS
+	%----------------------------------------------------------------------------------------
+	
+	\textsc{\LARGE Iowa State University}\\[1.5cm] % Name of your university/college
+	\textsc{\LARGE Department of Electrical and Computer Engineering}\\[1.0cm]
+	\textsc{\Large Deep Machine Learning: Theory and Practice}\\[0.5cm] % Major heading such as course name
+	\textsc{\large EE 526X}\\[0.5cm] % Minor heading such as course title
+	
+	%----------------------------------------------------------------------------------------
+	%	TITLE SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\HRule \\[0.4cm]
+	{ \huge \bfseries Homework 3}\\[0.4cm] % Title of your document
+	\HRule \\[1.5cm]
+	
+	%----------------------------------------------------------------------------------------
+	%	AUTHOR SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushleft} \large
+			\emph{Author:}\\
+			Vishal \textsc{Deep} % Your name
+		\end{flushleft}
+	\end{minipage}
+	~
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushright} \large
+			\emph{Instructor:} \\
+			Dr. Zhengdao \textsc{Wang} % Supervisor's Name
+		\end{flushright}
+	\end{minipage}\\[2cm]
+	
+	% If you don't want a supervisor, uncomment the two lines below and remove the section above
+	%\Large \emph{Author:}\\
+	%John \textsc{Smith}\\[3cm] % Your name
+	
+	%----------------------------------------------------------------------------------------
+	%	DATE SECTION
+	%----------------------------------------------------------------------------------------
+	
+	{\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
+	
+	%----------------------------------------------------------------------------------------
+	%	LOGO SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\includegraphics[width=0.5\columnwidth]{Iowa_State_Cyclones_logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+	
+	%----------------------------------------------------------------------------------------
+	
+	\vfill % Fill the rest of the page with whitespace
+	
+\end{titlepage}
+%Header-Make sure you update this information!!!!
+%\noindent
+%\large\textbf{Homework21} \hfill \textbf{Vishal Deep} \\
+%\normalsize CPRE 581  \hfill ID: 010639648 \\
+%Dr. Zhengdao Duwe \hfill Due Date: 09/05/18 \\
+
+
+\section{Problem 1}
+
+\inputpython{pythonfiles/hw3_tf.py}{1}{124}
+
+\begin{lstlisting}[language=Python, basicstyle=\tiny]
+Extracting MNIST_data/train-images-idx3-ubyte.gz
+Extracting MNIST_data/train-labels-idx1-ubyte.gz
+Extracting MNIST_data/t10k-images-idx3-ubyte.gz
+Extracting MNIST_data/t10k-labels-idx1-ubyte.gz
+Number of epochs: 10
+========== NN1 session starts ==========
+Epoch: 1 Cost: 1.968383 Training Acc: 0.654000
+Epoch: 3 Cost: 1.081156 Training Acc: 0.776000
+Epoch: 5 Cost: 0.834734 Training Acc: 0.838000
+Epoch: 7 Cost: 0.717895 Training Acc: 0.850000
+Epoch: 9 Cost: 0.648424 Training Acc: 0.844000
+Test Accuracy: 0.860500
+========== NN1 session Completed ==========
+========== NN2 session starts ==========
+Epoch: 1 Cost: 2.518511 Training Acc: 0.122000
+Epoch: 3 Cost: 2.284648 Training Acc: 0.232000
+Epoch: 5 Cost: 2.258813 Training Acc: 0.212000
+Epoch: 7 Cost: 2.217494 Training Acc: 0.176000
+Epoch: 9 Cost: 2.161243 Training Acc: 0.178000
+Test Accuracy: 0.181700
+========== NN2 session Completed ==========
+Number of epochs: 50
+========== NN1 session starts ==========
+Epoch: 1 Cost: 1.839826 Training Acc: 0.780000
+Epoch: 11 Cost: 0.580703 Training Acc: 0.834000
+Epoch: 21 Cost: 0.475618 Training Acc: 0.914000
+Epoch: 31 Cost: 0.431121 Training Acc: 0.862000
+Epoch: 41 Cost: 0.405112 Training Acc: 0.906000
+Test Accuracy: 0.901500
+========== NN1 session Completed ==========
+========== NN2 session starts ==========
+Epoch: 1 Cost: 2.360294 Training Acc: 0.112000
+Epoch: 11 Cost: 2.276963 Training Acc: 0.230000
+Epoch: 21 Cost: 2.023256 Training Acc: 0.252000
+Epoch: 31 Cost: 1.616091 Training Acc: 0.472000
+Epoch: 41 Cost: 1.133604 Training Acc: 0.652000
+Test Accuracy: 0.772100
+========== NN2 session Completed ==========
+Number of epochs: 100
+========== NN1 session starts ==========
+Epoch: 1 Cost: 1.949118 Training Acc: 0.718000
+Epoch: 21 Cost: 0.482889 Training Acc: 0.890000
+Epoch: 41 Cost: 0.409774 Training Acc: 0.904000
+Epoch: 61 Cost: 0.378109 Training Acc: 0.894000
+Epoch: 81 Cost: 0.359247 Training Acc: 0.904000
+Test Accuracy: 0.911500
+========== NN1 session Completed ==========
+========== NN2 session starts ==========
+Epoch: 1 Cost: 2.405205 Training Acc: 0.108000
+Epoch: 21 Cost: 1.865193 Training Acc: 0.270000
+Epoch: 41 Cost: 1.101819 Training Acc: 0.584000
+Epoch: 61 Cost: 0.691297 Training Acc: 0.798000
+Epoch: 81 Cost: 0.430330 Training Acc: 0.874000
+Test Accuracy: 0.891100
+========== NN2 session Completed ==========
+\end{lstlisting}
+
+\section{Problem 2}
+
+\inputpython{pythonfiles/hw3_keras.py}{1}{64}
+
+\begin{lstlisting}[language=Python, basicstyle=\tiny]
+Number of epochs: 10
+========== NN1 session starts ===========
+Epoch 1/10
+ - 6s - loss: 58.6495 - accuracy: 0.4272
+Epoch 2/10
+ - 0s - loss: 12.9306 - accuracy: 0.7637
+Epoch 3/10
+ - 0s - loss: 9.0688 - accuracy: 0.8210
+Epoch 4/10
+ - 0s - loss: 7.5447 - accuracy: 0.8411
+Epoch 5/10
+ - 0s - loss: 6.6608 - accuracy: 0.8523
+Epoch 6/10
+ - 0s - loss: 6.0341 - accuracy: 0.8579
+Epoch 7/10
+ - 0s - loss: 5.5584 - accuracy: 0.8620
+Epoch 8/10
+ - 0s - loss: 5.1580 - accuracy: 0.8662
+Epoch 9/10
+ - 0s - loss: 4.8406 - accuracy: 0.8683
+Epoch 10/10
+ - 0s - loss: 4.5674 - accuracy: 0.8707
+Test Accuracy: 0.876000
+========== NN1 session completed ===========
+========== NN2 session starts ===========
+Epoch 1/10
+ - 1s - loss: 29.6423 - accuracy: 0.3535
+Epoch 2/10
+ - 1s - loss: 5.4192 - accuracy: 0.6727
+Epoch 3/10
+ - 1s - loss: 3.0112 - accuracy: 0.7594
+Epoch 4/10
+ - 1s - loss: 2.1132 - accuracy: 0.7977
+Epoch 5/10
+ - 1s - loss: 1.6312 - accuracy: 0.8198
+Epoch 6/10
+ - 1s - loss: 1.3211 - accuracy: 0.8345
+Epoch 7/10
+ - 1s - loss: 1.1066 - accuracy: 0.8461
+Epoch 8/10
+ - 1s - loss: 0.9479 - accuracy: 0.8539
+Epoch 9/10
+ - 1s - loss: 0.8283 - accuracy: 0.8626
+Epoch 10/10
+ - 1s - loss: 0.7297 - accuracy: 0.8703
+Test Accuracy: 0.866500
+========== NN2 session completed ===========
+Number of epochs: 50
+========== NN1 session starts ===========
+Epoch 1/50
+ - 0s - loss: 63.6025 - accuracy: 0.4189
+Epoch 2/50
+ - 0s - loss: 13.0491 - accuracy: 0.7642
+Epoch 3/50
+ - 0s - loss: 8.9469 - accuracy: 0.8198
+Epoch 4/50
+ - 0s - loss: 7.3473 - accuracy: 0.8405
+
+ .
+ .
+ .
+Epoch 46/50
+ - 0s - loss: 1.7235 - accuracy: 0.8938
+Epoch 47/50
+ - 0s - loss: 1.7137 - accuracy: 0.8931
+Epoch 48/50
+ - 0s - loss: 1.6825 - accuracy: 0.8936
+Epoch 49/50
+ - 0s - loss: 1.6626 - accuracy: 0.8916
+Epoch 50/50
+ - 0s - loss: 1.6322 - accuracy: 0.8929
+Test Accuracy: 0.890400
+========== NN1 session completed ===========
+========== NN2 session starts ===========
+Epoch 1/50
+ - 1s - loss: 27.6743 - accuracy: 0.3245
+Epoch 2/50
+ - 1s - loss: 4.2701 - accuracy: 0.5955
+Epoch 3/50
+ - 1s - loss: 2.2076 - accuracy: 0.6626
+Epoch 4/50
+ - 1s - loss: 1.4462 - accuracy: 0.7050
+.
+.
+.
+Epoch 46/50
+ - 1s - loss: 0.2258 - accuracy: 0.9350
+Epoch 47/50
+ - 1s - loss: 0.2239 - accuracy: 0.9350
+Epoch 48/50
+ - 1s - loss: 0.2216 - accuracy: 0.9352
+Epoch 49/50
+ - 1s - loss: 0.2181 - accuracy: 0.9356
+Epoch 50/50
+ - 1s - loss: 0.2166 - accuracy: 0.9370
+Test Accuracy: 0.919900
+========== NN2 session completed ===========
+Number of epochs: 100
+========== NN1 session starts ===========
+Epoch 1/100
+ - 0s - loss: 60.1685 - accuracy: 0.4158
+Epoch 2/100
+ - 0s - loss: 14.5209 - accuracy: 0.7547
+Epoch 3/100
+ - 0s - loss: 9.8338 - accuracy: 0.8148
+Epoch 4/100
+ - 0s - loss: 7.9235 - accuracy: 0.8352
+.
+.
+.
+Epoch 96/100
+ - 0s - loss: 1.0928 - accuracy: 0.8948
+Epoch 97/100
+ - 0s - loss: 1.0831 - accuracy: 0.8970
+Epoch 98/100
+ - 0s - loss: 1.0674 - accuracy: 0.8969
+Epoch 99/100
+ - 0s - loss: 1.0682 - accuracy: 0.8964
+Epoch 100/100
+ - 0s - loss: 1.0557 - accuracy: 0.8969
+Test Accuracy: 0.883700
+========== NN1 session completed ===========
+========== NN2 session starts ===========
+Epoch 1/100
+ - 1s - loss: 23.6178 - accuracy: 0.3468
+Epoch 2/100
+ - 1s - loss: 4.7503 - accuracy: 0.6693
+Epoch 3/100
+ - 1s - loss: 2.5675 - accuracy: 0.7556
+Epoch 4/100
+ - 1s - loss: 1.7952 - accuracy: 0.7940
+.
+.
+.
+Epoch 96/100
+ - 1s - loss: 0.1688 - accuracy: 0.9516
+Epoch 97/100
+ - 1s - loss: 0.1670 - accuracy: 0.9512
+Epoch 98/100
+ - 1s - loss: 0.1662 - accuracy: 0.9523
+Epoch 99/100
+ - 1s - loss: 0.1663 - accuracy: 0.9513
+Epoch 100/100
+ - 1s - loss: 0.1631 - accuracy: 0.9520
+Test Accuracy: 0.930600
+========== NN2 session completed ===========
+\end{lstlisting}
+
+
+
+
+
+
+\end{document}
