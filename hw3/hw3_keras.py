@@ -29,6 +29,7 @@ batchSize = 500
 epochsArr = [10, 50, 100]
 
 for epochs in epochsArr:
+    print("Number of epochs: {}".format(epochs))
     print("========== NN1 session starts ===========")
     model_nn1 = Sequential([
       Dense(10, activation='softmax', input_shape=(784,))
