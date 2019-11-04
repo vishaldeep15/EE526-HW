@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (MiKTeX 2.9.7140 64-bit) (preloaded format=xelatex 2019.10.17)  2 NOV 2019 22:00
+This is XeTeX, Version 3.14159265-2.6-0.999991 (MiKTeX 2.9.7140 64-bit) (preloaded format=xelatex 2019.10.17)  3 NOV 2019 18:32
 entering extended mode
 **./midterm.tex
 (midterm.tex
@@ -451,30 +451,38 @@ LaTeX Info: Redefining \Cpagerefrange on input line 2370.
 LaTeX Info: Redefining \labelcref on input line 2370.
 LaTeX Info: Redefining \labelcpageref on input line 2370.
 Package cleveref Info: `listings' support loaded on input line 3131.
+)
+("C:\Program Files\MiKTeX 2.9\tex/latex/float\float.sty"
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count278
+\float@exts=\toks22
+\float@box=\box52
+\@float@everytoks=\toks23
+\@floatcapt=\box53
 ) (midterm.aux)
 \openout1 = `midterm.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-\c@lstlisting=\count278
-\AtBeginShipoutBox=\box52
-Package hyperref Info: Link coloring OFF on input line 22.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+\c@lstlisting=\count279
+\AtBeginShipoutBox=\box54
+Package hyperref Info: Link coloring OFF on input line 23.
 
 ("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\nameref.sty"
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -482,11 +490,11 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 ("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\gettitlestring.sty"
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count279
+\c@section@level=\count280
 )
-LaTeX Info: Redefining \ref on input line 22.
-LaTeX Info: Redefining \pageref on input line 22.
-LaTeX Info: Redefining \nameref on input line 22.
+LaTeX Info: Redefining \ref on input line 23.
+LaTeX Info: Redefining \pageref on input line 23.
+LaTeX Info: Redefining \nameref on input line 23.
 
 (midterm.out) (midterm.out)
 \@outlinefile=\write4
@@ -502,23 +510,42 @@ File: se-ascii-print.def 2016/05/16 v1.11 stringenc: Printable ASCII characters
 [1
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 107.
+File: images/pixels.png Graphic file (type bmp)
+<images/pixels.png>
  [1]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 107.
+File: images/herringbone.png Graphic file (type bmp)
+<images/herringbone.png>
+ [2]
+File: images/transpose.png Graphic file (type bmp)
+<images/transpose.png>
+File: images/arduino.png Graphic file (type bmp)
+<images/arduino.png>
+ [3]
+File: images/pareto.png Graphic file (type bmp)
+<images/pareto.png>
+
+Overfull \hbox (4.20805pt too wide) in paragraph at lines 194--195
+ [][] 
+ []
+
+[4] (midterm.bbl)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 231.
+ [5]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 231.
  (midterm.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 107.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 107.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 231.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 231.
 Package rerunfilecheck Info: File `midterm.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 107.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 231.
  ) 
 Here is how much of TeX's memory you used:
- 21739 strings out of 427669
- 379054 string characters out of 3149214
- 535486 words of memory out of 3000000
- 25722 multiletter control sequences out of 15000+200000
- 536199 words of font info for 48 fonts, out of 3000000 for 9000
+ 21845 strings out of 427669
+ 380613 string characters out of 3149214
+ 540486 words of memory out of 3000000
+ 25812 multiletter control sequences out of 15000+200000
+ 536215 words of font info for 50 fonts, out of 3000000 for 9000
  1348 hyphenation exceptions out of 8191
- 32i,4n,32p,830b,429s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 32i,7n,32p,847b,465s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on midterm.pdf (2 pages).
+Output written on midterm.pdf (6 pages).

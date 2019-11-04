@@ -1,0 +1,17 @@
+\begin{thebibliography}{1}
+
+\bibitem{gural2019memory}
+A.~Gural and B.~Murmann, ``Memory-optimal direct convolutions for maximizing
+  classification accuracy in embedded applications,'' in {\em International
+  Conference on Machine Learning}, pp.~2515--2524, 2019.
+
+\bibitem{msp430}
+T.~Instruments, ``Msp430g2 launchpad development kit,'' 2014.
+
+\bibitem{armm0}
+A.~Developer, ``Cortex-m0,'' 2019.
+
+\bibitem{tflite}
+T.~Flow, ``Deploy machine learning models on mobile and iot devices,'' 2019.
+
+\end{thebibliography}
