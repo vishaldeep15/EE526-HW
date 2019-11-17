@@ -1,0 +1,274 @@
+\documentclass[letter, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{lipsum} %This package just generates Lorem Ipsum filler text. 
+\usepackage{fullpage} % changes the margin
+\usepackage{listings} % code formatting
+\usepackage{enumitem} % change enumeration counter
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{pythonhighlight}
+\usepackage{listings}
+\usepackage{float}
+
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+}
+
+\begin{document}
+	
+\begin{titlepage}
+	
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+	
+	\center % Center everything on the page
+	
+	%----------------------------------------------------------------------------------------
+	%	HEADING SECTIONS
+	%----------------------------------------------------------------------------------------
+	
+	\textsc{\LARGE Iowa State University}\\[1.5cm] % Name of your university/college
+	\textsc{\LARGE Department of Electrical and Computer Engineering}\\[1.0cm]
+	\textsc{\Large Deep Machine Learning: Theory and Practice}\\[0.5cm] % Major heading such as course name
+	\textsc{\large EE 526X}\\[0.5cm] % Minor heading such as course title
+	
+	%----------------------------------------------------------------------------------------
+	%	TITLE SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\HRule \\[0.4cm]
+	{ \huge \bfseries Homework 4}\\[0.4cm] % Title of your document
+	\HRule \\[1.5cm]
+	
+	%----------------------------------------------------------------------------------------
+	%	AUTHOR SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushleft} \large
+			\emph{Author:}\\
+			Vishal \textsc{Deep} % Your name
+		\end{flushleft}
+	\end{minipage}
+	~
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushright} \large
+			\emph{Instructor:} \\
+			Dr. Zhengdao \textsc{Wang} % Supervisor's Name
+		\end{flushright}
+	\end{minipage}\\[2cm]
+	
+	% If you don't want a supervisor, uncomment the two lines below and remove the section above
+	%\Large \emph{Author:}\\
+	%John \textsc{Smith}\\[3cm] % Your name
+	
+	%----------------------------------------------------------------------------------------
+	%	DATE SECTION
+	%----------------------------------------------------------------------------------------
+	
+	{\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
+	
+	%----------------------------------------------------------------------------------------
+	%	LOGO SECTION
+	%----------------------------------------------------------------------------------------
+	\includegraphics[scale=0.4]{isu.PNG}\\[1cm] % Include a department/university logo - this will require the graphicx package
+	
+	%----------------------------------------------------------------------------------------
+	
+	\vfill % Fill the rest of the page with whitespace
+	
+\end{titlepage}
+%Header-Make sure you update this information!!!!
+%\noindent
+%\large\textbf{Homework21} \hfill \textbf{Vishal Deep} \\
+%\normalsize CPRE 581  \hfill ID: 010639648 \\
+%Dr. Zhengdao  \hfill Due Date: 09/05/18 \\
+
+
+\section{Problem 1}
+
+\inputpython{../cnn.py}{1}{124}
+
+\begin{lstlisting}[language=Python, basicstyle=\tiny]
+==================Model Analysis Report======================
+
+Doc:
+op: The nodes are operation kernel type, such as MatMul, Conv2D. Graph nodes belonging to the same type are aggregated together.
+flops: Number of float operations. Note: Please read the implementation for the math behind it.
+
+Profile:
+node name | # float_ops
+Mul                      478.11k float_ops (100.00%, 49.97%)
+Add                      477.22k float_ops (50.03%, 49.88%)
+Sub                        910 float_ops (0.15%, 0.10%)
+Rsqrt                      512 float_ops (0.05%, 0.05%)
+RealDiv                      3 float_ops (0.00%, 0.00%)
+
+======================End of Report==========================
+x_train shape: (48000, 28, 28, 1) y_train shape: (48000, 10)
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)              (None, 28, 28, 32)        320       
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 28, 28, 32)        9248      
+_________________________________________________________________
+max_pooling2d (MaxPooling2D) (None, 14, 14, 32)        0         
+_________________________________________________________________
+dropout (Dropout)            (None, 14, 14, 32)        0         
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 12, 12, 64)        18496     
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 10, 10, 64)        36928     
+_________________________________________________________________
+batch_normalization (BatchNo (None, 10, 10, 64)        256       
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 5, 5, 64)          0         
+_________________________________________________________________
+dropout_1 (Dropout)          (None, 5, 5, 64)          0         
+_________________________________________________________________
+flatten (Flatten)            (None, 1600)              0         
+_________________________________________________________________
+dense (Dense)                (None, 256)               409856    
+_________________________________________________________________
+batch_normalization_1 (Batch (None, 256)               1024      
+_________________________________________________________________
+dropout_2 (Dropout)          (None, 256)               0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 10)                2570      
+=================================================================
+Total params: 478,698
+Trainable params: 478,058
+Non-trainable params: 640
+_________________________________________________________________
+956753
+Train on 48000 samples, validate on 12000 samples
+Epoch 1/10
+
+   64/48000 [..............................] - ETA: 1:21:45 - loss: 3.1956 - acc: 0.0781
+  384/48000 [..............................] - ETA: 13:38 - loss: 1.9243 - acc: 0.3568
+  .
+  .   
+47872/48000 [============================>.] - ETA: 0s - loss: 0.5091 - acc: 0.8166
+48000/48000 [==============================] - 15s 318us/sample - loss: 0.5089 - acc: 0.8166 - val_loss: 0.3691 - val_acc: 0.8597
+Epoch 2/10
+
+   64/48000 [..............................] - ETA: 9s - loss: 0.3649 - acc: 0.8438
+  384/48000 [..............................] - ETA: 8s - loss: 0.3306 - acc: 0.8750
+  .
+  .
+47808/48000 [============================>.] - ETA: 0s - loss: 0.3293 - acc: 0.8807
+48000/48000 [==============================] - 8s 177us/sample - loss: 0.3298 - acc: 0.8804 - val_loss: 0.3535 - val_acc: 0.8700
+Epoch 3/10
+
+   64/48000 [..............................] - ETA: 8s - loss: 0.2136 - acc: 0.9219
+  384/48000 [..............................] - ETA: 8s - loss: 0.3025 - acc: 0.8984
+  
+Epoch 9/10
+
+   64/48000 [..............................] - ETA: 9s - loss: 0.0963 - acc: 0.9688
+  384/48000 [..............................] - ETA: 8s - loss: 0.1696 - acc: 0.9219
+  .
+  .
+47936/48000 [============================>.] - ETA: 0s - loss: 0.1775 - acc: 0.9340
+48000/48000 [==============================] - 9s 177us/sample - loss: 0.1774 - acc: 0.9341 - val_loss: 0.1890 - val_acc: 0.9327
+
+10000/10000 - 1s - loss: 0.2106 - acc: 0.9249
+
+Test accuracy: 0.9249
+\end{lstlisting}
+
+\subsection{Calculation of Floating Point Operations}
+The caluclations of floating point operations of each layer is done below.
+
+\begin{enumerate}
+	\item Conv1: (28 $\times$ 28 $\times$ 32) (3 $\times$ 3 $\times$ 1 + 1) = 250880
+	\item Conv2: (28 $\times$ 28 $\times$ 32) (3 $\times$ 3 $\times$ 32) = 7225344
+	\item Maxpool1: (14 $\times$ 14 $\times$ 32 ) ( 2 $\times$ 2 ) = 25088
+	\item Conv3: (12 $\times$ 12 $\times$ 64) (3 $\times$ 3 $\times$ 32) = 2654208
+	\item Conv4: (10 $\times$ 10 $\times$ 64) (3 $\times$ 3 $\times$ 64) = 3686400
+	\item Maxpool2: (5 $\times$ 5 $\times$ 64) (2 $\times$ 2) = 6400
+	\item Dense: 256 $\times$ ( 10 $\times$ 5 $\times$ 5 ) = 64000	
+\end{enumerate}
+
+\begin{itemize}
+	\item Total number of FLOPS in one forward pass = 13912320
+	\item The number of floating point operations per iteration step
+(per mini-batch) = 3 $\times$ 13912320 = 41736960
+	\item The number of floating point operations per epoch with batch size of 64 = 938 $\times$ 13912320 = 1.305 $\times 10^{10}$
+	\item Total number of operations over the whole training process = 13.05 $\times 10^{10}$
+\end{itemize}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=0.3]{../epoch_acc.png}
+	\caption{Accuracy vs Epochs. Orange shows training accuracy and blue shows test accuracy}
+\end{figure}
+
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=0.3]{../epoch_loss.png}
+	\caption{Loss vs Epochs. Orange shows training loss and blue shows test loss}
+\end{figure}
+
+\newpage
+
+\section{Problem 2}
+
+\inputpython{../rnn.py}{1}{80}
+
+\begin{lstlisting}[language=Python, basicstyle=\tiny]
+Model: "sequential_59"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+lstm_15 (LSTM)               (None, 1, 10)             840       
+_________________________________________________________________
+lstm_16 (LSTM)               (None, 1, 20)             2480      
+_________________________________________________________________
+lstm_17 (LSTM)               (None, 20)                3280      
+_________________________________________________________________
+dense_64 (Dense)             (None, 1)                 21        
+=================================================================
+Total params: 6,621
+Trainable params: 6,621
+Non-trainable params: 0
+_________________________________________________________________
+Epoch 1/100
+55/55 [==============================] - 4s 78ms/sample - loss: 0.3621
+Epoch 2/100
+55/55 [==============================] - 0s 749us/sample - loss: 0.3398
+Epoch 3/100
+55/55 [==============================] - 0s 756us/sample - loss: 0.3171
+Epoch 4/100
+55/55 [==============================] - 0s 695us/sample - loss: 0.2933
+.
+.
+.
+Epoch 98/100
+55/55 [==============================] - 0s 815us/sample - loss: 0.0334
+Epoch 99/100
+55/55 [==============================] - 0s 688us/sample - loss: 0.0331
+Epoch 100/100
+55/55 [==============================] - 0s 784us/sample - loss: 0.0333
+Training RMSE: 0.058698832142092955
+
+Test RMSE: 0.20008337101134305
+\end{lstlisting}
+
+The network has three LSTM layers with 10, 20, and 20 units and one Dense layer at the end with \emph{linear} activation. The model summary is printed above with total number of parameters. 
+While designing the network number of issues were faced and solved successfully. The input shape in the first layer was not aligned in the starting but was later solved. Other issue was this is not classification dataset but we have worked with classification problems in the class. It took some time to find out how to calculate the accuracy of the designed network.
+The design choices were made based on the exporation of different network architectures and finally using the one with highest accuracy or lower RMSE value.
+
+\begin{itemize}
+	\item Training RMSE: 0.0587, Test RMSE: 0.20
+\end{itemize}
+
+
+
+\end{document}

@@ -1,0 +1,9 @@
+https://machinelearningmastery.com/how-to-develop-a-cnn-from-scratch-for-fashion-mnist-clothing-classification/
+
+https://towardsdatascience.com/a-guide-to-an-efficient-way-to-build-neural-network-architectures-part-ii-hyper-parameter-42efca01e5d7
+
+https://medium.com/tensorflow/hello-deep-learning-fashion-mnist-with-keras-50fcff8cd74a
+
+http://cs231n.github.io/convolutional-networks/
+
+https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/
