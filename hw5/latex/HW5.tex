@@ -1,0 +1,224 @@
+\documentclass[letter, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{lipsum} %This package just generates Lorem Ipsum filler text. 
+\usepackage{fullpage} % changes the margin
+\usepackage{listings} % code formatting
+\usepackage{enumitem} % change enumeration counter
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{pythonhighlight}
+\usepackage{listings}
+\usepackage{float}
+
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+}
+
+\begin{document}
+	
+\begin{titlepage}
+	
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+	
+	\center % Center everything on the page
+	
+	%----------------------------------------------------------------------------------------
+	%	HEADING SECTIONS
+	%----------------------------------------------------------------------------------------
+	
+	\textsc{\LARGE Iowa State University}\\[1.5cm] % Name of your university/college
+	\textsc{\LARGE Department of Electrical and Computer Engineering}\\[1.0cm]
+	\textsc{\Large Deep Machine Learning: Theory and Practice}\\[0.5cm] % Major heading such as course name
+	\textsc{\large EE 526X}\\[0.5cm] % Minor heading such as course title
+	
+	%----------------------------------------------------------------------------------------
+	%	TITLE SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\HRule \\[0.4cm]
+	{ \huge \bfseries Homework 5}\\[0.4cm] % Title of your document
+	\HRule \\[1.5cm]
+	
+	%----------------------------------------------------------------------------------------
+	%	AUTHOR SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushleft} \large
+			\emph{Author:}\\
+			Vishal \textsc{Deep} % Your name
+		\end{flushleft}
+	\end{minipage}
+	~
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushright} \large
+			\emph{Instructor:} \\
+			Dr. Zhengdao \textsc{Wang} % Supervisor's Name
+		\end{flushright}
+	\end{minipage}\\[2cm]
+	
+	% If you don't want a supervisor, uncomment the two lines below and remove the section above
+	%\Large \emph{Author:}\\
+	%John \textsc{Smith}\\[3cm] % Your name
+	
+	%----------------------------------------------------------------------------------------
+	%	DATE SECTION
+	%----------------------------------------------------------------------------------------
+	
+	{\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
+	
+	%----------------------------------------------------------------------------------------
+	%	LOGO SECTION
+	%----------------------------------------------------------------------------------------
+	\includegraphics[scale=0.4]{isu.PNG}\\[1cm] % Include a department/university logo - this will require the graphicx package
+	
+	%----------------------------------------------------------------------------------------
+	
+	\vfill % Fill the rest of the page with whitespace
+	
+\end{titlepage}
+%Header-Make sure you update this information!!!!
+%\noindent
+%\large\textbf{Homework21} \hfill \textbf{Vishal Deep} \\
+%\normalsize CPRE 581  \hfill ID: 010639648 \\
+%Dr. Zhengdao  \hfill Due Date: 09/05/18 \\
+
+
+\section{Problem 1}
+
+%\inputpython{../cnn.py}{1}{124}
+
+%\begin{lstlisting}[language=Python, basicstyle=\tiny]
+%
+%\end{lstlisting}
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{nw-graph.png}
+	\caption{Network Graph}
+\end{figure}
+
+
+\section{Problem 2}
+States: S = {0, 1} \\
+Actions: A = {1, 2} \\
+Rewards:
+$$ R_{S}^{(a)} =
+ \begin{cases} 
+      1 & (s,a) = (0,1) \\
+      4 & (s,a) = (0,2) \\
+      3 & (s,a) = (1,1) \\
+      2 & (s,a) = (1,2)
+   \end{cases}
+$$ \\
+Transition Probabilities:
+$$
+\begin{bmatrix}
+P_{00}^{(1)} & P_{00}^{(2)} \\
+P_{10}^{(1)} & P_{10}^{(2)} 
+\end{bmatrix}	= 
+\begin{bmatrix}
+	\frac{1}{3} & \frac{1}{2} \\
+	\frac{1}{4} & \frac{2}{3}
+\end{bmatrix}
+$$
+
+Discount factor: $ \gamma = \frac{3}{4}$
+	
+The Bellman's expectation equation is given by
+
+$$ V_{\pi}(S) = R_{S} + \gamma \sum_{s^{'} \epsilon S} P_{SS^{'}} V_{\pi}(S^{'}) $$
+
+\subsection*{2(a):}
+choosing action 1 in state 0, and action 2 in state 1,
+
+$$ V_{\pi}(0) = R_{0}^{(1)} + \gamma (P_{00}^{(1)} V_{\pi}(0) + P_{01}^{(1)} V_{\pi}(1)) $$
+$$ V_{\pi}(1) = R_{1}^{(2)} + \gamma (P_{10}^{(2)} V_{\pi}(0) + P_{11}^{(2)} V_{\pi}(1)) $$
+
+Substituting the values,
+$$ V_{\pi}(0) = 1 + \frac{3}{4} (\frac{1}{3} V_{\pi}(0) + \frac{2}{3} V_{\pi}(1)) $$
+$$ V_{\pi}(1) = 2 + \frac{3}{4} (\frac{2}{3} V_{\pi}(0) + \frac{1}{3} V_{\pi}(1)) $$
+
+Solving these 2 equations, we get
+$$ V_{\pi}(0) = \frac{28}{5} $$
+$$ V_{\pi}(1) = \frac{32}{5} $$
+
+\subsection*{2(b):}
+\inputpython{../prob2-b.py}{1}{11}
+
+\begin{lstlisting}[language=Python, basicstyle=\tiny]
+Iteration = 0, vpi_0 = 1.0, vpi_1 = 2.0
+Iteration = 1, vpi_0 = 2.25, vpi_1 = 3.0
+Iteration = 2, vpi_0 = 3.0625, vpi_1 = 3.875
+Iteration = 3, vpi_0 = 3.7031, vpi_1 = 4.5
+Iteration = 4, vpi_0 = 4.17578125, vpi_1 = 4.9765625
+\end{lstlisting}
+
+\subsection*{2(c):}
+The Bellman's expectation equation for $ q_{\pi}(s, a) $ is
+
+$$ q_{\pi}(s, a) = R_{S}^{(a)} + \gamma \sum_{s^{'} \epsilon S} P_{SS^{'}}^{(a)} V_{\pi}(S^{'}) $$
+
+$$ q_{\pi}(0, 1) = R_{0}^{(1)} + \gamma (P_{00}^{(1)} V_{\pi}(0) + P_{01}^{(1)} V_{\pi}(1)) $$
+
+$$ q_{\pi}(0, 1) = 1 + \frac{3}{4} (\frac{1}{3} V_{\pi}(0) + \frac{2}{3} V_{\pi}(1)) = \frac{28}{5} $$
+
+$$ q_{\pi}(0, 2) = R_{0}^{(2)} + \gamma (P_{00}^{(2)} V_{\pi}(0) + P_{01}^{(2)} V_{\pi}(1)) $$
+
+$$ q_{\pi}(0, 2) = 4 + \frac{3}{4} (\frac{1}{2} V_{\pi}(0) + \frac{1}{2} V_{\pi}(1)) = \frac{17}{2} $$
+
+$$ q_{\pi}(1, 1) = R_{1}^{(1)} + \gamma (P_{10}^{(1)} V_{\pi}(0) + P_{11}^{(1)} V_{\pi}(1)) $$
+
+$$ q_{\pi}(1, 1) = 3 + \frac{3}{4} (\frac{1}{4} V_{\pi}(0) + \frac{3}{4} V_{\pi}(1)) = \frac{153}{20} $$
+
+$$ q_{\pi}(1, 2) = R_{1}^{(2)} + \gamma (P_{10}^{(2)} V_{\pi}(0) + P_{11}^{(2)} V_{\pi}(1)) $$ 
+
+$$ q_{\pi}(1, 2) = 4 + \frac{3}{4} (\frac{1}{2} V_{\pi}(0) + \frac{1}{2} V_{\pi}(1)) = \frac{32}{5} $$
+
+\subsection*{2(d)}
+
+From the part c, \\
+
+$$ State 0: q_{\pi}(0, 1) < q_{\pi}(0, 2) $$
+$$ State 1: q_{\pi}(1, 1) > q_{\pi}(1, 2) $$
+
+Improved policy would be to choose action 2 in state 0 and action 1 in state 1.
+
+\subsection*{2(e)}
+\inputpython{../prob2-ef.py}{1}{44}
+
+\begin{lstlisting}[language=Python, basicstyle=\tiny]
+Iteration: 0, V0: 4.0000, V1: 3.0000
+Iteration: 1, V0: 6.6250, V1: 5.4375
+Iteration: 2, V0: 8.5234, V1: 7.3008
+Iteration: 3, V0: 9.9341, V1: 8.7048
+Iteration: 4, V0: 10.9896, V1: 9.7591
+Iteration: 5, V0: 11.7808, V1: 10.5500
+Iteration: 6, V0: 12.3741, V1: 11.1433
+Iteration: 7, V0: 12.8190, V1: 11.5882
+Iteration: 8, V0: 13.1527, V1: 11.9219
+Iteration: 9, V0: 13.4030, V1: 12.1722
+q(0,1) = 10.4369
+q(0,2) = 13.5907
+q(1,1) = 12.3599
+q(1,2) = 11.7446
+\end{lstlisting}
+
+\subsection*{2(f)}
+
+As calculated from the code above, Optimal Policy is
+
+$$ 	q(0,1) = 10.4369 $$
+$$	q(0,2) = 13.5907 $$
+$$	q(1,1) = 12.3599 $$
+$$	q(1,2) = 11.7446 $$
+
+\section*{Problem 3}
+
+\end{document}
