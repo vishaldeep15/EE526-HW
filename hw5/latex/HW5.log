@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (MiKTeX 2.9.7140 64-bit) (preloaded format=xelatex 2019.10.17)  7 DEC 2019 21:03
+This is XeTeX, Version 3.14159265-2.6-0.999991 (MiKTeX 2.9.7140 64-bit) (preloaded format=xelatex 2019.10.17)  8 DEC 2019 21:58
 entering extended mode
 **./HW5.tex
 (HW5.tex
@@ -375,26 +375,31 @@ File: isu.PNG Graphic file (type bmp)
  [1
 
 ]
-File: nw-graph.png Graphic file (type bmp)
-<nw-graph.png>
+File: shortest.png Graphic file (type bmp)
+<shortest.png>
+File: longest.png Graphic file (type bmp)
+<longest.png>
  [1] ("C:\Program Files\MiKTeX 2.9\tex/latex/listings\lstlang1.sty"
 File: lstlang1.sty 2019/09/10 1.8c listings language file
 ) (../prob2-b.py
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <9> not available
 (Font)              Font shape `TU/lmtt/b/n' tried instead on input line 5.
-)
+) [2]
 Underfull \hbox (badness 10000) in paragraph at lines 186--187
 
  []
 
-[2] (../prob2-ef.py) [3] [4] (HW5.aux) ) 
+(../prob2-ef.py [3]) [4] (../prob3-abc.py
+Missing character: There is no π in font [lmmono9-regular]:!
+ [5] [6]) (../prob3-cd.py [7])
+[8] [9] (HW5.aux) ) 
 Here is how much of TeX's memory you used:
- 15497 strings out of 427669
- 288078 string characters out of 3149214
- 731783 words of memory out of 3000000
- 19494 multiletter control sequences out of 15000+200000
- 535895 words of font info for 54 fonts, out of 3000000 for 9000
+ 15601 strings out of 427669
+ 289226 string characters out of 3149214
+ 806026 words of memory out of 3000000
+ 19591 multiletter control sequences out of 15000+200000
+ 536122 words of font info for 55 fonts, out of 3000000 for 9000
  1348 hyphenation exceptions out of 8191
- 32i,7n,49p,455b,1627s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 32i,7n,49p,455b,1997s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on HW5.pdf (5 pages).
+Output written on HW5.pdf (10 pages).

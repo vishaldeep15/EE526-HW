@@ -88,24 +88,24 @@
 %Dr. Zhengdao  \hfill Due Date: 09/05/18 \\
 
 
-\section{Problem 1}
+\section*{Problem 1}
 
-%\inputpython{../cnn.py}{1}{124}
-
-%\begin{lstlisting}[language=Python, basicstyle=\tiny]
-%
-%\end{lstlisting}
-
-
-
+\subsection*{Shortest Path}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.3]{nw-graph.png}
-	\caption{Network Graph}
+	\includegraphics[scale=0.4]{shortest.png}
+	\caption{Shortest Path in the Network Graph}
+\end{figure}
+
+\subsection*{Longest Path}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.4]{longest.png}
+	\caption{Longest Path in the Network Graph}
 \end{figure}
 
 
-\section{Problem 2}
+\section*{Problem 2}
 States: S = {0, 1} \\
 Actions: A = {1, 2} \\
 Rewards:
@@ -153,11 +153,11 @@ $$ V_{\pi}(1) = \frac{32}{5} $$
 \inputpython{../prob2-b.py}{1}{11}
 
 \begin{lstlisting}[language=Python, basicstyle=\tiny]
-Iteration = 0, vpi_0 = 1.0, vpi_1 = 2.0
-Iteration = 1, vpi_0 = 2.25, vpi_1 = 3.0
-Iteration = 2, vpi_0 = 3.0625, vpi_1 = 3.875
-Iteration = 3, vpi_0 = 3.7031, vpi_1 = 4.5
-Iteration = 4, vpi_0 = 4.17578125, vpi_1 = 4.9765625
+Iteration = 0.0000, vpi_0 = 1.0000, vpi_1 = 2.0000
+Iteration = 1.0000, vpi_0 = 2.2500, vpi_1 = 3.0000
+Iteration = 2.0000, vpi_0 = 3.0625, vpi_1 = 3.8750
+Iteration = 3.0000, vpi_0 = 3.7031, vpi_1 = 4.5000
+Iteration = 4.0000, vpi_0 = 4.1758, vpi_1 = 4.9766
 \end{lstlisting}
 
 \subsection*{2(c):}
@@ -212,13 +212,106 @@ q(1,2) = 11.7446
 
 \subsection*{2(f)}
 
-As calculated from the code above, Optimal Policy is
+As calculated from the code above, optimal action values are
 
 $$ 	q(0,1) = 10.4369 $$
 $$	q(0,2) = 13.5907 $$
 $$	q(1,1) = 12.3599 $$
 $$	q(1,2) = 11.7446 $$
 
+Therefore, optimal policy is action 2 for state 0 and action 1 for state 1.
+
 \section*{Problem 3}
+
+\subsection*{Model-free Prediction}
+\inputpython{../prob3-abc.py}{1}{100}
+
+\begin{lstlisting}[language=Python, basicstyle=\tiny]
+==============Monte Carlo Policy===============
+Iteration: 0, V0: 7.1590, V1: 0.0000
+Iteration: 999, V0: 5.9375, V1: 5.9782
+Iteration: 1998, V0: 5.9807, V1: 5.9846
+Iteration: 2997, V0: 5.9595, V1: 5.9642
+Iteration: 3996, V0: 5.9710, V1: 5.9713
+Iteration: 4995, V0: 5.9741, V1: 5.9770
+Iteration: 5994, V0: 5.9706, V1: 5.9804
+Iteration: 6993, V0: 5.9818, V1: 6.0127
+Iteration: 7992, V0: 5.9775, V1: 5.9968
+Iteration: 8991, V0: 5.9769, V1: 5.9932
+Iteration: 9990, V0: 5.9635, V1: 5.9792
+=================TD Policy======================
+n-step: 1, V0: 1.4996, V1: 1.4205
+n-step: 2, V0: 3.4743, V1: 3.3494
+n-step: 3, V0: 5.0082, V1: 4.6691
+n-step: 4, V0: 5.7060, V1: 5.3093
+n-step: 5, V0: 5.8365, V1: 5.5579
+n-step: 6, V0: 5.8742, V1: 5.5994
+n-step: 7, V0: 5.9390, V1: 5.5891
+n-step: 8, V0: 5.9456, V1: 5.6378
+n-step: 9, V0: 5.9471, V1: 5.6487
+n-step: 10, V0: 6.0019, V1: 5.6536
+\end{lstlisting}
+
+\subsection*{Model-free Control}
+
+\inputpython{../prob3-cd.py}{1}{100}
+\begin{lstlisting}[language=Python, basicstyle=\tiny]
+=========================SARSA Policy=========================
+Iteration: 0
+q(0,0): 0.0486, q(0,1): 0.2211, q(1,0): 0.8352, q(1,1): 0.4369
+Iteration: 10000
+q(0,0): 11.2595, q(0,1): 14.2353, q(1,0): 13.4361, q(1,1): 12.2050
+Iteration: 20000
+q(0,0): 11.0295, q(0,1): 14.1369, q(1,0): 13.1112, q(1,1): 12.2691
+Iteration: 30000
+q(0,0): 11.2686, q(0,1): 14.6300, q(1,0): 13.4772, q(1,1): 12.1915
+Iteration: 40000
+q(0,0): 11.1310, q(0,1): 14.4624, q(1,0): 13.3777, q(1,1): 12.0822
+Iteration: 50000
+q(0,0): 11.0851, q(0,1): 14.1555, q(1,0): 13.3284, q(1,1): 12.1937
+Iteration: 60000
+q(0,0): 11.0201, q(0,1): 14.4014, q(1,0): 13.5121, q(1,1): 12.2782
+Iteration: 70000
+q(0,0): 11.2019, q(0,1): 14.2638, q(1,0): 13.1307, q(1,1): 12.1635
+Iteration: 80000
+q(0,0): 11.1117, q(0,1): 14.3455, q(1,0): 13.4174, q(1,1): 11.9247
+Iteration: 90000
+q(0,0): 11.1230, q(0,1): 14.0838, q(1,0): 13.0826, q(1,1): 11.9977
+
+=========================Q-Learning Policy=========================
+Iteration: 0
+q(0,0): 0.1245, q(0,1): 0.5790, q(1,0): 0.9468, q(1,1): 0.1210
+Iteration: 10000
+q(0,0): 11.3922, q(0,1): 14.3925, q(1,0): 13.3032, q(1,1): 12.3208
+Iteration: 20000
+q(0,0): 11.5667, q(0,1): 14.6827, q(1,0): 13.5772, q(1,1): 12.5422
+Iteration: 30000
+q(0,0): 11.5650, q(0,1): 14.5763, q(1,0): 13.5902, q(1,1): 12.5269
+Iteration: 40000
+q(0,0): 11.4970, q(0,1): 14.7709, q(1,0): 13.6710, q(1,1): 12.4856
+Iteration: 50000
+q(0,0): 11.4699, q(0,1): 14.5548, q(1,0): 13.6559, q(1,1): 12.5678
+Iteration: 60000
+q(0,0): 11.2410, q(0,1): 14.5413, q(1,0): 13.3637, q(1,1): 12.5054
+Iteration: 70000
+q(0,0): 11.4190, q(0,1): 14.3120, q(1,0): 13.4151, q(1,1): 12.2987
+Iteration: 80000
+q(0,0): 11.4765, q(0,1): 14.5599, q(1,0): 13.5022, q(1,1): 12.5060
+Iteration: 90000
+q(0,0): 11.4824, q(0,1): 14.7722, q(1,0): 13.5385, q(1,1): 12.5165
+\end{lstlisting}
+
+With SARSA policy:
+$$ 	q(0,1) = 11.1230 $$
+$$	q(0,2) = 14.0838 $$
+$$	q(1,1) = 13.0826 $$
+$$	q(1,2) = 11.9977 $$
+
+With Q-learning policy: 
+$$ 	q(0,1) = 11.4824 $$
+$$	q(0,2) = 14.7722 $$
+$$	q(1,1) = 13.5385 $$
+$$	q(1,2) = 12.5165 $$
+
 
 \end{document}
