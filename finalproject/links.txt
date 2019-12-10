@@ -1,3 +1,7 @@
 https://www.analyticsvidhya.com/blog/2019/04/introduction-deep-q-learning-python/
 
 https://towardsdatascience.com/deep-reinforcement-learning-tutorial-with-open-ai-gym-c0de4471f368
+
+https://keon.io/deep-q-learning/
+
+https://medium.com/@gtnjuvin/my-journey-into-deep-q-learning-with-keras-and-gym-3e779cc12762
