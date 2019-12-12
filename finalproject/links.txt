@@ -5,3 +5,9 @@ https://towardsdatascience.com/deep-reinforcement-learning-tutorial-with-open-ai
 https://keon.io/deep-q-learning/
 
 https://medium.com/@gtnjuvin/my-journey-into-deep-q-learning-with-keras-and-gym-3e779cc12762
+
+https://github.com/Wheele9/openAI-gym-solutions-in-keras/blob/master/Acrobot-v1.py
+
+https://marcinbogdanski.github.io/rl-sketchpad/Deep_Q_Network/1010_DQN_ClassicControl.html
+
+https://towardsdatascience.com/reinforcement-learning-w-keras-openai-dqns-1eed3a5338c
