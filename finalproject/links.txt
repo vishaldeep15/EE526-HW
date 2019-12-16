@@ -11,3 +11,5 @@ https://github.com/Wheele9/openAI-gym-solutions-in-keras/blob/master/Acrobot-v1.
 https://marcinbogdanski.github.io/rl-sketchpad/Deep_Q_Network/1010_DQN_ClassicControl.html
 
 https://towardsdatascience.com/reinforcement-learning-w-keras-openai-dqns-1eed3a5338c
+
+https://jfpettit.svbtle.com/rlpack
