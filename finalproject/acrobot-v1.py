@@ -12,14 +12,13 @@ class DQN:
         self.env = env
         self.state_size = env.observation_space.shape[0]
         self.action_size = env.action_space.n
-        self.memory = deque(maxlen=2000)
+        self.memory = deque(maxlen=10000)
         self.gamma = 0.95
         self.epsilon = 1
         self.epsilon_min = 0.01
         self.epsilon_decay = 0.995
         self.learning_rate = 0.01
-        self.tau = 0.05
-        self.batch_size = 32
+        self.batch_size = 64
         # Create model
         # Two seperate models, one for doing predictions 
         # and other for tracking target values
@@ -30,9 +29,9 @@ class DQN:
     def create_model(self):
         model   = Sequential()
         state_shape  = self.env.observation_space.shape
-        model.add(Dense(24, input_dim=state_shape[0], activation="relu"))
-        model.add(Dense(48, activation="relu"))
-        model.add(Dense(24, activation="relu"))
+        model.add(Dense(5, input_dim=state_shape[0], activation="relu"))
+        model.add(Dense(5, activation="relu"))
+        model.add(Dense(5, activation="relu"))
         model.add(Dense(self.env.action_space.n))
         model.compile(loss="mean_squared_error", optimizer=Adam(lr=self.learning_rate))
         return model
@@ -59,8 +58,7 @@ class DQN:
                 Q_future = np.max(self.target_model.predict(next_state)[0])
                 target[0][action] = reward + Q_future * self.gamma
             # Fit the model
-            self.model.fit(state, target, epochs=1, verbose=0)
-
+            self.model.fit(state, target, epochs=10, verbose=0)
 
     # Updates the weights in target NN
     def target_train(self):
@@ -91,12 +89,13 @@ class DQN:
 
 def main():
     env = gym.make('Acrobot-v1')
-    state_size = env.observation_space.shape[0]
-    action_size = env.action_space.n
+    # state_size = env.observation_space.shape[0]
+    # # action_size = env.action_space.n
     DQNAgent = DQN(env)
+    state_size = DQNAgent.state_size
     done = False
-    trials = 500
-    trial_len = 1000
+    trials = 100
+    trial_len = 500
 
     for trial in range(trials):
         # reset environment
@@ -113,9 +112,12 @@ def main():
             next_state = np.reshape(next_state, [1, state_size])
             DQNAgent.save(state, action, reward, next_state, done)
 
-            # Train both Neural Networks
+            # Train prediction Neural Networks
             DQNAgent.train()
-            DQNAgent.target_train()
+            # Update target NN periodically
+            if step%100 == 0:
+                print("Updating target Network")
+                DQNAgent.target_train()
             
             # Update state
             state = next_state
@@ -123,12 +125,5 @@ def main():
                 print(f"Trial: {trial}, Score: {trial_len-step}, e: {DQNAgent.epsilon:.4} ")
                 break
 
-
-
 if __name__ == "__main__":
     main()
-
-
-
-
-
