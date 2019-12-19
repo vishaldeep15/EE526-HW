@@ -1,5 +1,6 @@
 import random
 import gym
+import time
 import numpy as np
 from collections import deque
 from keras.models import Sequential
@@ -101,6 +102,11 @@ def main(render=False):
     episodes = 500
     trial_len = 500
 
+    # Print Neural Network model summary
+    DQNAgent.model.summary()
+
+    # Capture training start time
+    startTime = np.round(time.time(), decimals=4)
     for episode in range(episodes):
         rewards = []
         # reset environment
@@ -133,6 +139,10 @@ def main(render=False):
                       .format(episode, trial_len-step, DQNAgent.epsilon, np.sum(rewards)))
                 # print(f"Episode:{episode},Score:{trial_len-step}/{trial_len},Epsilon:{DQNAgent.epsilon}")
                 break
+    # Calculate time taken to train      
+    stopTime = np.round(time.time(), decimals=4)
+    totalTime = (np.round(((stopTime - startTime)/60), decimals=4))
+    print('Training time: {} minutes'.format(totalTime))
 
 if __name__ == "__main__":
     main()
