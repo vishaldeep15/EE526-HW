@@ -17,8 +17,8 @@ class DQN:
         self.gamma = 0.99
         self.epsilon = 0.5
         self.epsilon_min = 0.001
-        self.epsilon_decay = 0.9992
-        self.learning_rate = 1e-4
+        self.epsilon_decay = 0.9
+        self.learning_rate = 1e-3
         self.batch_size = 64
         self.tau = 1e-3
         # Create model
@@ -31,9 +31,9 @@ class DQN:
     def create_model(self):
         model   = Sequential()
         state_shape  = self.env.observation_space.shape
-        model.add(Dense(5, input_dim=state_shape[0], activation="relu"))
-        model.add(Dense(10, activation="relu"))
-        # model.add(Dense(5, activation="relu"))
+        model.add(Dense(48, input_dim=state_shape[0], activation="relu"))
+        model.add(Dense(24, activation="relu"))
+        # model.add(Dense(10, activation="relu"))
         model.add(Dense(self.env.action_space.n))
         model.compile(loss="mean_squared_error", optimizer=Adam(lr=self.learning_rate))
         return model
@@ -99,7 +99,7 @@ def main(render=False):
     DQNAgent = DQN(env)
     state_size = DQNAgent.state_size
     done = False
-    episodes = 500
+    episodes = 100
     trial_len = 500
 
     # Print Neural Network model summary
@@ -127,16 +127,20 @@ def main(render=False):
             # Train prediction Neural Networks
             DQNAgent.train()
             # Update target NN periodically
-            if step%10 == 0:
+            if step%50 == 0:
                 # print("Updating target Network")
                 DQNAgent.target_train()
             # Append Rewards
             rewards.append(reward)            
             # Update state
             state = next_state
+            # Calculate score
+            score = trial_len-step-1
+            if score >= 350:
+                DQNAgent.save_weights("best-weights")
             if done:
                 print("episode: {}, score: {}, epsilon: {:.6}, Rewards: {}"
-                      .format(episode, trial_len-step, DQNAgent.epsilon, np.sum(rewards)))
+                      .format(episode, trial_len-step-1, DQNAgent.epsilon, np.sum(rewards)))
                 # print(f"Episode:{episode},Score:{trial_len-step}/{trial_len},Epsilon:{DQNAgent.epsilon}")
                 break
     # Calculate time taken to train      
