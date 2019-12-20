@@ -4,4 +4,20 @@
 G.~Brockman, V.~Cheung, L.~Pettersson, J.~Schneider, J.~Schulman, J.~Tang, and
   W.~Zaremba, ``Openai gym,'' 2016.
 
+\bibitem{wang2015dueling}
+Z.~Wang, T.~Schaul, M.~Hessel, H.~Van~Hasselt, M.~Lanctot, and N.~De~Freitas,
+  ``Dueling network architectures for deep reinforcement learning,'' {\em arXiv
+  preprint arXiv:1511.06581}, 2015.
+
+\bibitem{ankit:handson}
+A.~Choudhary, ``A hands-on introduction to deep q-learning using openai gym in
+  python,'' 2019.
+
+\bibitem{yash:RL}
+Y.~Patel, ``Reinforcement learning w/ keras + openai: Dqns,'' 2017.
+
+\bibitem{schaul2015prioritized}
+T.~Schaul, J.~Quan, I.~Antonoglou, and D.~Silver, ``Prioritized experience
+  replay,'' {\em arXiv preprint arXiv:1511.05952}, 2015.
+
 \end{thebibliography}

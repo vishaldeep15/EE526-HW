@@ -14,6 +14,7 @@
 \usepackage{float}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{pythonhighlight}
 
 \lstset{
 	basicstyle=\ttfamily,
@@ -140,39 +141,77 @@ In this project, I have used the neural network shown in \cref{fig:nn}. This NN 
 %\end{algorithm}
 
 \begin{algorithm}[H]
-	\caption{Euclid’s algorithm}\label{euclid}
+	\caption{Double Q-learning Algorithm \cite{wang2015dueling}}
+	\label{algo:doubleQ}
 	\begin{algorithmic}[1]
 		\State Initialize primary $Q_{A}$ and target network $Q_{B}$
-		\For{each episode} \Do
-		\For{each step} \Do
-		\State Choose action $a_t$ which maximize q-value
-		\State Execute $a_t$ and observe State $S_{t+1}$ and Reward $R_t$
-		\State Save ($S_{t}, $a_t$, $R_t$, $S_{t+1}$) to memory
+		\For{each episode} 
+			\For{each step}
+				\State Choose action $a_t$ which maximize q-value
+				\State Execute $a_t$ and observe State $S_{t+1}$ and Reward $R_t$
+				\State Save ($S_{t}$, $a_t$, $R_t$, $S_{t+1}$) to memory
+				
+				\For{samples in memory}
+					\State Train primary Neural Network $Q_{A}$ using samples
+					\State Compute Target Q-value
+					\State $Q(s_{t}, a{t}) \approx R_{t} + \gamma Q(s_{t+1}, argmax_{a^{'}} Q^{'}(s_{t}, a_{t}))$
+				\EndFor
+				
+				\State Update target network $Q_{B}$ at each update interval:
+				\State $\theta^{'} \leftarrow \tau * \theta + (1-\tau) * \theta^{'} $
+			\EndFor
 		\EndFor
-		\EndFor
-		
-		\Procedure{Euclid}{$a,b$}
-		\State $r\gets a\bmod b$
-		\While{$r\not=0$}\Comment{We have the answer if r is 0}
-		\State $a\gets b$
-		\State $b\gets r$
-		\State $r\gets a\bmod b$
-		\EndWhile\label{euclidendwhile}
-		\For{\texttt{<some condition>}}
-		\State \texttt{<do stuff>}
-		\EndFor
-		\State \textbf{return} $b$\Comment{The gcd is b}
-		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
+
+\section{Python Code}
+The code is inspired from several tutorials on the internet including \cite{ankit:handson, yash:RL}
+
+
+\inputpython{../acrobot-v1.py}{1}{200}
+
+\begin{lstlisting}[language=Python, basicstyle=\tiny]
+episode: 0, score: 225, epsilon: 0.265721, Rewards: -274.0
+episode: 1, score: 231, epsilon: 0.141215, Rewards: -268.0
+episode: 2, score: 356, epsilon: 0.102946, Rewards: -143.0
+episode: 3, score: 301, epsilon: 0.0675426, Rewards: -198.0
+episode: 4, score: 328, epsilon: 0.0443147, Rewards: -171.0
+episode: 5, score: 353, epsilon: 0.0323054, Rewards: -146.0
+episode: 6, score: 284, epsilon: 0.019076, Rewards: -215.0
+episode: 7, score: 283, epsilon: 0.0112642, Rewards: -216.0
+episode: 8, score: 318, epsilon: 0.00739044, Rewards: -181.0
+episode: 9, score: 340, epsilon: 0.00484887, Rewards: -159.0
+episode: 10, score: 341, epsilon: 0.00318134, Rewards: -158.0
+episode: 11, score: 321, epsilon: 0.00208728, Rewards: -178.0
+episode: 12, score: 344, epsilon: 0.00136946, Rewards: -155.0
+episode: 13, score: 302, epsilon: 0.001, Rewards: -197.0
+episode: 14, score: 318, epsilon: 0.001, Rewards: -181.0
+episode: 15, score: 220, epsilon: 0.001, Rewards: -279.0
+episode: 16, score: 247, epsilon: 0.001, Rewards: -252.0
+episode: 17, score: 318, epsilon: 0.001, Rewards: -181.0
+episode: 18, score: 208, epsilon: 0.001, Rewards: -291.0
+episode: 19, score: 198, epsilon: 0.001, Rewards: -301.0
+episode: 20, score: 192, epsilon: 0.001, Rewards: -307.0
+\end{lstlisting}
+
+\noindent Training time for 100 episodes was 54.81 minutes \newline
+Training time for 20 episodes was 19.26 minutes
+
+\section{Lessons Learned}
+\begin{enumerate}
+	\item \textbf{Hyper-parameter tuning}: The hyper-parameters play a really important part in helping the NN function estimators to learn and predict the Q-values. In this project, I had to tune these parameters manually to see the effect in overall performance. This manual tuning is difficult and needs a lot of effort to get good results
+	\item \textbf{Double Q-learning}: Double Q-learning performs much better than Q-learning algorithm and helps to converge faster. Working on this project helped me understand how double Q-learning algorithm works in practice and how it can be applied to standard benchmarks like Open AI gym package.
+	\item \textbf{Exploitation vs Exploration}: The exploration and exploitation plays a big role in making algorithm converge to a good predicted values. In this project, the exploration is done in first few episodes and then the algorithm starts doing exploitation. This was controlled by hyper-parameter $\epsilon$, which was dynamically changed to get benefits from this concept.
+\end{enumerate}
+
+\section{Possible Improvements}
+\begin{enumerate}
+	\item \textbf{Prioritized Experience Replay (PER) \cite{schaul2015prioritized}}: This is based on the concept that some experiences are more important for the training but they don't occur frequently because we are choosing samples from the memory randomly. In PER, sampling distribution is changed by having tuples of experience with priorities.
+	\item \textbf{Dueling DQN} \cite{wang2015dueling}: In this we separate the NN function estimators into two elements: one that estimates the state value and other that estimates the advantage for each action. The advantage of DDQN is that it can learn the valuable states without having to learn the actions each state.
+\end{enumerate}
 
 
 \bibliography{references} 
 \bibliographystyle{ieeetr}
-
-
-
-
-
 
 \end{document}

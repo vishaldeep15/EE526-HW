@@ -1,3 +1,16 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: final_project.aux
 The style file: ieeetr.bst
 Database file #1: references.bib
+Warning--entry type for "ankit:handson" isn't style-file defined
+--line 8 of file references.bib
+Warning--string name "april" is undefined
+--line 11 of file references.bib
+Warning--entry type for "yash:RL" isn't style-file defined
+--line 16 of file references.bib
+Warning--string name "july" is undefined
+--line 19 of file references.bib
+Repeated entry---line 31 of file references.bib
+ : @online{yash:RL
+ :                ,
+I'm skipping whatever remains of this entry
+(There was 1 error message)
