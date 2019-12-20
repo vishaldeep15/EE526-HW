@@ -1,0 +1,178 @@
+\documentclass[letterpaper , 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{lipsum} %This package just generates Lorem Ipsum filler text. 
+\usepackage{fullpage} % changes the margin
+\usepackage{listings} % code formatting
+\usepackage{enumitem} % change enumeration counter
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+%\usepackage{pythonhighlight}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+}
+
+\begin{document}
+	
+\begin{titlepage}
+	
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+	
+	\center % Center everything on the page
+	
+	%----------------------------------------------------------------------------------------
+	%	HEADING SECTIONS
+	%----------------------------------------------------------------------------------------
+	
+	\textsc{\LARGE Iowa State University}\\[1.5cm] % Name of your university/college
+	\textsc{\LARGE Department of Electrical and Computer Engineering}\\[1.0cm]
+	\textsc{\Large Deep Machine Learning: Theory and Practice}\\[0.5cm] % Major heading such as course name
+	\textsc{\large EE 526X}\\[0.5cm] % Minor heading such as course title
+	
+	%----------------------------------------------------------------------------------------
+	%	TITLE SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\HRule \\[0.4cm]
+	{ \huge \bfseries Final Project Report}\\[0.4cm] % Title of your document
+	\HRule \\[1.5cm]
+	
+	%----------------------------------------------------------------------------------------
+	%	AUTHOR SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushleft} \large
+			\emph{Author:}\\
+			Vishal \textsc{Deep} % Your name
+		\end{flushleft}
+	\end{minipage}
+	~
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushright} \large
+			\emph{Instructor:} \\
+			Dr. Zhengdao \textsc{Wang} % Supervisor's Name
+		\end{flushright}
+	\end{minipage}\\[2cm]
+	
+	% If you don't want a supervisor, uncomment the two lines below and remove the section above
+	%\Large \emph{Author:}\\
+	%John \textsc{Smith}\\[3cm] % Your name
+	
+	%----------------------------------------------------------------------------------------
+	%	DATE SECTION
+	%----------------------------------------------------------------------------------------
+	
+	{\large \today}\\[5cm] % Date, change the \today to a set date if you want to be precise
+	
+	%----------------------------------------------------------------------------------------
+	%	LOGO SECTION
+	%----------------------------------------------------------------------------------------
+	
+	\includegraphics[scale=0.3]{isu.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
+	
+	%----------------------------------------------------------------------------------------
+	
+	\vfill % Fill the rest of the page with whitespace
+	
+\end{titlepage}
+%Header-Make sure you update this information!!!!
+%\noindent
+%\large\textbf{Homework21} \hfill \textbf{Vishal Deep} \\
+%\normalsize CPRE 581  \hfill ID: 010639648 \\
+%Dr. Zhengdao Duwe \hfill Due Date: 09/05/18 \\
+
+
+\section{Problem Statement}
+The main goal of the project is to design and optimize a reinforcement learning algorithm using double Q-learning on Acrobot-v1 environment from Open AI gym package \cite{openAI-gym}. The function approximation should be done with multi-layer neural networks. 
+
+\subsection*{Acrobot-v1}
+The Acrobot-v1 environment consists of two joints. One joint is fixed and other joint is actuated as shown in \cref{fig:acrobot}. In the initial stage the joints are hanging downwards and the goal is to make lower joint reach a certain given height. This environment is unsolved environment which means it does not have a specific reward above which we can say that it is solved.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{acrobot.jpg}
+	\caption{Acrobot-v1 from Open AI gym package}
+	\label{fig:acrobot}
+\end{figure}
+
+\begin{itemize}
+	\item \textbf{State}: In this environment states consists of $\sin$ and $\cos$ of the two rotational joint angles and their angular velocities. A complete state is \newline
+	[cos(theta1) sin(theta1) cos(theta2) sin(theta2) thetaDot1 thetaDot2].
+	\item \textbf{Action}: There are three possible actions in this environment. The action is either applying +1, 0 or -1 torque on the joint between the two links.
+\end{itemize}
+
+\subsection*{Deep Q-learning}
+In the Q-learning algorithm, a virtual table of action and Q-values is used. This table could grow really fast depending on the states and actions. Therefore a better solution is to create Neural Networks (NNs) which can approximate the Q-values for every action. This is called deep Q-learning. In case of Q-learning, taking the maximum overestimated values introduces a maximization bias in learning.  To solve this problem, we use a double Q-learning algorithm which uses two separate Q-value estimators. These estimators are used to update each other and thereby providing unbiased estimation of Q-values. In this project, I will be using double Q-learning function estimators using neural networks.
+
+\section{Neural Network Model}
+In this project, I have used the neural network shown in \cref{fig:nn}. This NN has three fully connected dense layers. The first layer consists of 48 neurons, the second one has 24 neurons, and last layer consists of 3 neurons to signify the 3 output actions. The total number of parameters are 1587.  
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.8]{model.png}
+	\caption{Neural Network Model used for function approximation in double Q-learning algorithm}
+	\label{fig:nn}
+\end{figure}
+
+\section{Pseudo-code for the Algorithm}
+%\begin{algorithm}[H]
+%	Initialize primary $Q_{A}$ and target network $Q_{B}$
+%	\For{\texttt{each episode}} \Do
+%		\For{each step} \Do
+%			Choose action $a_t$ which maximize q-value
+%			Execute $a_t$ and observe State $S_{t+1}$ and Reward $R_t$
+%			Save ($S_{t}, $a_t$, $R_t$, $S_{t+1}$) to memory
+%			
+%	\EndFor
+%	\caption{Double Q-learning Algorithm}
+%	\label{algo:doubleQ}
+%\end{algorithm}
+
+\begin{algorithm}[H]
+	\caption{Euclid’s algorithm}\label{euclid}
+	\begin{algorithmic}[1]
+		\State Initialize primary $Q_{A}$ and target network $Q_{B}$
+		\For{each episode} \Do
+		\For{each step} \Do
+		\State Choose action $a_t$ which maximize q-value
+		\State Execute $a_t$ and observe State $S_{t+1}$ and Reward $R_t$
+		\State Save ($S_{t}, $a_t$, $R_t$, $S_{t+1}$) to memory
+		\EndFor
+		\EndFor
+		
+		\Procedure{Euclid}{$a,b$}
+		\State $r\gets a\bmod b$
+		\While{$r\not=0$}\Comment{We have the answer if r is 0}
+		\State $a\gets b$
+		\State $b\gets r$
+		\State $r\gets a\bmod b$
+		\EndWhile\label{euclidendwhile}
+		\For{\texttt{<some condition>}}
+		\State \texttt{<do stuff>}
+		\EndFor
+		\State \textbf{return} $b$\Comment{The gcd is b}
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+
+\bibliography{references} 
+\bibliographystyle{ieeetr}
+
+
+
+
+
+
+\end{document}
